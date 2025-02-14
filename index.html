@@ -1,88 +1,711 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub JSON Viewer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xemble Explanation Questionnaire</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .options, .likert-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .option, .likert-option {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .option.selected, .likert-option.selected {
+      background: #e3f2fd;
+      border-color: #2196F3;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    .small-text {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .training-feedback, .status {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .training-feedback {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+    .phase-header {
+      margin-bottom: 15px;
+      font-style: italic;
+      color: #333;
+    }
+    .comparative-method {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    .comparative-method h4 {
+      margin: 0 0 10px;
+    }
+    /* Update Likert scale styles */
+    .likert-scale {
+      display: flex;
+      flex-direction: row; /* added for horizontal layout */
+      justify-content: space-between;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .likert-option {
+      flex: 1;
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid #ddd;
+      margin: 0 5px;
+      border-radius: 4px;
+    }
+    .likert-option.selected {
+      background: #e3f2fd;
+      border-color: #2196F3;
+    }
+    .likert-label {
+      font-size: 0.8em;
+      margin-top: 5px;
+    }
+  </style>
 </head>
-<body class="bg-gray-50">
-    <div id="app">
-        <div class="container mx-auto p-4 max-w-4xl">
-            <header class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">GitHub JSON Viewer</h1>
-                <p class="text-gray-600">Automatically loading JSON from GitHub</p>
-            </header>
-
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <div v-if="loading" class="text-center p-4">
-                    <p class="text-gray-600">Loading data...</p>
-                </div>
-
-                <div v-if="error" class="mt-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
-                    {{ error }}
-                </div>
-
-                <div v-if="jsonData" class="mt-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-3">JSON Data:</h2>
-                    <pre 
-                        class="bg-gray-50 p-4 rounded-md border border-gray-200 overflow-auto max-h-[600px]"
-                        style="white-space: pre-wrap;"
-                    >{{ formatJson(jsonData) }}</pre>
-                </div>
-            </div>
-        </div>
+<body>
+  <div id="app" class="container">
+    <!-- Consent Screen -->
+    <div v-if="!consentGiven" class="section">
+      <h2>Survey Description</h2>
+      <p>
+        This survey aims to gather information about your preferences and experiences in software development and your evaluation of AI explanations. Your responses will be used for research purposes only.
+      </p>
+      <h3>Consent</h3>
+      <p>
+        By proceeding with this survey, you consent to participate in this research study. Your participation is voluntary and you may withdraw at any time.
+      </p>
+      <button @click="giveConsent()">I Consent</button>
     </div>
 
+    <!-- Training Screen -->
+    <div v-else-if="consentGiven && !trainingCompleted" class="section">
+      <h2>Training Section</h2>
+      <p>Please complete this short practice so you can get familiar with the questionnaire format.</p>
+      <div class="section">
+        <h3>{{ trainingQuestion.text }}</h3>
+        <div class="small-text">Click on one of the options below:</div>
+        <div class="options">
+          <div
+            v-for="option in trainingQuestion.options"
+            :key="option"
+            class="option"
+            :class="{ selected: trainingAnswer === option }"
+            @click="selectTrainingAnswer(option)"
+          >
+            {{ option }}
+          </div>
+        </div>
+        <div v-if="trainingAnswer" class="training-feedback">
+          {{ trainingQuestion.explanation }}
+        </div>
+      </div>
+      <button @click="completeTraining()" :disabled="!trainingAnswer">Proceed to Survey</button>
+    </div>
+
+    <!-- Main Questionnaire Phases -->
+    <div v-else-if="!surveyCompleted && trainingCompleted">
+      <!-- For phases 1-3: display one question at a time -->
+      <div v-if="phase !== 'comparative'" class="section">
+        <div class="phase-header">
+          Survey Case {{ currentCaseIndex + 1 }} of {{ totalCases }} - Phase: {{ phaseDisplay }}
+        </div>
+        <div v-if="currentCase">
+          <h3>
+            Dataset: {{ currentCase.dataset }} | Sample ID: {{ currentCase.id }}
+          </h3>
+          <!-- Inserted sample information block -->
+          <p><strong>Feature Values:</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(value, key) in currentCase.features" :key="key">
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <strong>Explanation ({{ currentMethod }}):</strong> 
+            {{ currentCase.explanations[currentMethod] }}
+          </p>
+          <!-- For phases 1,2,3 use a generic question view -->
+          <div v-if="currentPhaseQuestions[currentSubquestionIndex]">
+            <p>{{ currentPhaseQuestions[currentSubquestionIndex].text }}</p>
+            <!-- For option questions -->
+            <div v-if="!currentPhaseQuestions[currentSubquestionIndex].type || currentPhaseQuestions[currentSubquestionIndex].type==='option'" class="options">
+              <div v-for="option in currentPhaseQuestions[currentSubquestionIndex].options" 
+                   :key="option" 
+                   class="option" 
+                   :class="{ selected: getCurrentAnswer(currentPhaseQuestions[currentSubquestionIndex].key)?.answer === option }"
+                   @click="answerQuestion(option)">
+                {{ option }}
+              </div>
+            </div>
+            <!-- For Likert scale questions -->
+            <div v-else-if="currentPhaseQuestions[currentSubquestionIndex].type==='likert'" class="likert-scale">
+              <div v-for="(option, index) in currentPhaseQuestions[currentSubquestionIndex].options" 
+                   :key="index"
+                   class="likert-option"
+                   :class="{ selected: getCurrentAnswer(currentPhaseQuestions[currentSubquestionIndex].key)?.answer === (index + 1) }"
+                   @click="answerQuestion(index + 1)">
+                <div>{{ index + 1 }}</div>
+                <div class="likert-label">{{ option }}</div>
+              </div>
+            </div>
+            <!-- For textarea questions -->
+            <div v-else-if="currentPhaseQuestions[currentSubquestionIndex].type==='textarea'">
+              <textarea v-model="textResponse" placeholder="Enter text here..." style="width: 100%; min-height: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+              <button @click="submitTextResponse">Submit answer</button>
+            </div>
+            <div class="small-text">
+              Time: {{ getCurrentAnswer(currentPhaseQuestions[currentSubquestionIndex].key)?.timeTaken || 0 }} ms
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button @click="prevQuestion" :disabled="isFirstSubquestion">Previous</button>
+          <button @click="nextQuestion" :disabled="!currentAnswerSelected">Next</button>
+        </div>
+      </div>
+        
+      <!-- Comparative Assessment Phase -->
+      <div v-else class="section">
+        <h2>Comparative Assessment</h2>
+        <p>
+          Now please compare the three explanations side by side for the following sample.
+        </p>
+        <div v-if="comparativeCase">
+          <h3>
+            Dataset: {{ comparativeCase.dataset }} | Sample ID: {{ comparativeCase.id }}
+          </h3>
+          <p><strong>Feature Values:</strong></p>
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(value, key) in comparativeCase.features" :key="key">
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+              </tr>
+            </tbody>
+          </table>
+            <p>Model Prediction: <strong>{{ comparativeCase.model_prediction }}</strong> (Confidence: {{ comparativeCase.confidence }})</p>
+            <div class="comparative-method">
+              <h4>{{ currentComparativeMethod }}</h4>
+              <p>{{ comparativeCase.explanations[currentComparativeMethod] }}</p>
+              <div v-if="currentComparativeQuestions[currentComparativeQuestionIndex]">
+                <p>{{ currentComparativeQuestions[currentComparativeQuestionIndex].text }}</p>
+                <div class="options">
+                  <div v-for="option in currentComparativeQuestions[currentComparativeQuestionIndex].options" 
+                       :key="option" 
+                       class="option" 
+                       :class="{ selected: getComparativeAnswer(currentComparativeMethod, currentComparativeQuestions[currentComparativeQuestionIndex].key) === option }"
+                       @click="answerComparativeQuestion(option)">
+                    {{ option }}
+          </div>
+                </div>
+                <div class="small-text">
+                  Time: {{ getComparativeAnswer(currentComparativeMethod, currentComparativeQuestions[currentComparativeQuestionIndex].key)?.timeTaken || 0 }} ms
+                </div>
+              </div>
+              <div class="buttons">
+                <button @click="prevComparativeQuestion" :disabled="isFirstComparativeSubquestion">Previous</button>
+                <button @click="nextComparativeQuestion" :disabled="!currentComparativeAnswerSelected">
+                  Next
+                </button>
+          </div>
+            </div>
+            <button v-if="allComparativeDone" @click="submitSurvey()">Submit Survey</button>
+        </div>
+      </div>
+    </div>
+      
+    <!-- Completion Screen -->
+    <div v-else class="section">
+      <h2>Thank you for completing the survey!</h2>
+      <div class="status" v-for="(msg, i) in submissionStatus" :key="i">
+        {{ msg }}
+      </div>
+    </div>
+  </div>
+
     <script>
-        const { createApp, ref, onMounted } = Vue;
+      const { createApp, ref, computed, onMounted } = Vue;
 
-        createApp({
-            setup() {
-                const jsonData = ref(null);
-                const loading = ref(false);
-                const error = ref(null);
+      createApp({
+        setup() {
+          // Fetch mockData from API
+          const mockData = ref(null);
+          onMounted(async () => {
+            const response = await fetch("https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json");
+            mockData.value = await response.json();
+          });
 
-                // Replace this URL with your GitHub JSON URL
-                const githubUrl = 'https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json';
+          // Consent & Training States
+          const consentGiven = ref(false);
+          const trainingCompleted = ref(false);
 
-                const fetchData = async () => {
-                    loading.value = true;
-                    error.value = null;
-                    jsonData.value = null;
+          // Simple training question (can be extended)
+          const trainingQuestion = {
+            text: "For practice: Which color do you prefer?",
+            options: ["Blue", "Red", "Green", "Yellow"],
+            explanation: "Great! You've successfully selected an answer. This is how you'll answer questions in the survey."
+          };
+          const trainingAnswer = ref(null);
 
-                    try {
-                        const response = await fetch(githubUrl);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        const data = await response.json();
-                        jsonData.value = data;
-                    } catch (err) {
-                        error.value = `Error fetching data: ${err.message}`;
-                    } finally {
-                        loading.value = false;
-                    }
-                };
-
-                const formatJson = (data) => {
-                    return JSON.stringify(data, null, 2);
-                };
-
-                // Fetch data when the component mounts
-                onMounted(() => {
-                    fetchData();
-                });
-
-                return {
-                    jsonData,
-                    loading,
-                    error,
-                    formatJson
-                };
+          function giveConsent() {
+            consentGiven.value = true;
+          }
+          function selectTrainingAnswer(option) {
+            trainingAnswer.value = option;
+          }
+          function completeTraining() {
+            if (trainingAnswer.value) {
+              trainingCompleted.value = true;
+              // initialize survey variables after training
+              initializeSurvey();
             }
-        }).mount('#app');
+          }
+
+          // Create combinedCases once mockData is loaded
+          const combinedCases = computed(() => {
+            if (!mockData.value) return [];
+            const arr = [];
+            mockData.value.datasets.forEach(dataset => {
+              dataset.samples.forEach(sample => {
+                arr.push({ dataset: dataset.name, ...sample });
+              });
+            });
+            return arr;
+          });
+          const totalCases = computed(() => combinedCases.value.length);
+
+          // Explanation methods (cycle among these in phases 1-3)
+          const explanationMethods = ["Xemble", "SHAP", "LIME"];
+
+          // Survey states
+          const currentCaseIndex = ref(0);
+          // phase can be: 'phase1' (initial prediction), 'phase2' (decision making), 'phase3' (error analysis), or 'comparative' at end.
+          const phase = ref("phase1");
+
+          // Answers for each phase of the current case
+          const phase1Answer = ref({ prediction: null, confidence: null });
+          const phase2Answer = ref({ decision: null, action: null, trust: null, overrideReason: "" });
+          const phase3Answer = ref({ problem: null, concernDetail: "", assessmentConfidence: null });
+
+          // Store all survey responses; each entry holds answers for the case phases.
+          const surveyResponses = ref([]);
+
+          // Comparative assessment answers for each explanation method
+          const comparativeAnswers = ref({});
+          explanationMethods.forEach(method => {
+            comparativeAnswers.value[method] = { help: null, detail: null, useful: null, confidence: null };
+          });
+          // Use one case (e.g., first case) for the comparative assessment.
+          const comparativeCase = computed(() => combinedCases.value[0] || null);
+
+          const surveyCompleted = ref(false);
+          const submissionStatus = ref([]);
+
+          // Returns the current case object based on index
+          const currentCase = computed(() => {
+            return combinedCases.value[currentCaseIndex.value] || null;
+          });
+          // Pick an explanation method based on the current case index (rotate methods)
+          const currentMethod = computed(() => explanationMethods[currentCaseIndex.value % explanationMethods.length]);
+
+          // Provide a display string for the phase
+          const phaseDisplay = computed(() => {
+            if (phase.value === "phase1") return "Initial Prediction (Local Fidelity)";
+            if (phase.value === "phase2") return "Decision Making (Trust Calibration)";
+            if (phase.value === "phase3") return "Error Analysis (Interpretability)";
+            return "";
+          });
+
+          // Check if the current phase's answers are complete to enable "Next" button.
+          const isPhaseComplete = computed(() => {
+            if (phase.value === "phase1") {
+              return phase1Answer.value.prediction && phase1Answer.value.confidence;
+            } else if (phase.value === "phase2") {
+              if (!phase2Answer.value.decision || !phase2Answer.value.action || !phase2Answer.value.trust) {
+                return false;
+              }
+              if (phase2Answer.value.action === "Override" && phase2Answer.value.overrideReason.trim() === "") return false;
+              return true;
+            } else if (phase.value === "phase3") {
+              if (!phase3Answer.value.problem || !phase3Answer.value.assessmentConfidence) {
+                return false;
+              }
+              // If concerns are indicated, concernDetail can be optional.
+              return true;
+            }
+            return false;
+          });
+
+          // Check if we are at the very first phase of the first case
+          const isFirstPhase = computed(() => currentCaseIndex.value === 0 && phase.value === "phase1");
+
+          // Navigation between phases and cases
+          function nextPhase() {
+            if (phase.value === "phase1") {
+              phase.value = "phase2";
+            } else if (phase.value === "phase2") {
+              phase.value = "phase3";
+            } else if (phase.value === "phase3") {
+              // Store the responses for this case
+              surveyResponses.value.push({
+                case: currentCase.value,
+                explanationMethod: currentMethod.value,
+                phase1: { ...phase1Answer.value },
+                phase2: { ...phase2Answer.value },
+                phase3: { ...phase3Answer.value }
+              });
+              // Reset phase answers for next case
+              phase1Answer.value = { prediction: null, confidence: null };
+              phase2Answer.value = { decision: null, action: null, trust: null, overrideReason: "" };
+              phase3Answer.value = { problem: null, concernDetail: "", assessmentConfidence: null };
+
+              if (currentCaseIndex.value < totalCases.value - 1) {
+                currentCaseIndex.value++;
+                phase.value = "phase1";
+              } else {
+                // All cases done; move to comparative assessment phase
+                phase.value = "comparative";
+              }
+            }
+          }
+
+          function prevPhase() {
+            // Allow users to go back to previous phase (if not first phase)
+            if (phase.value === "phase1") {
+              if (currentCaseIndex.value > 0) {
+                currentCaseIndex.value--;
+                phase.value = "phase3"; // go to last phase of previous case
+                // Optionally load previous responses
+              }
+            } else if (phase.value === "phase2") {
+              phase.value = "phase1";
+            } else if (phase.value === "phase3") {
+              phase.value = "phase2";
+            }
+          }
+
+          // When survey is complete (comparative phase submitted)
+          async function submitSurvey() {
+            // In a real application, you would POST surveyResponses and comparativeAnswers to an API endpoint.
+            // Simulate submissions to three endpoints (one per dataset or form)
+            // Here, we simply simulate a delay and display messages.
+            const endpoints = {
+              "survey": "https://api.example.com/surveySubmit",
+              "comparative": "https://api.example.com/comparativeSubmit"
+            };
+            try {
+              await new Promise(resolve => setTimeout(resolve, 500));
+              console.log("Survey Responses:", surveyResponses.value);
+              submissionStatus.value.push("Survey responses submitted successfully.");
+            } catch (error) {
+              submissionStatus.value.push("Survey responses submission failed.");
+            }
+            try {
+              await new Promise(resolve => setTimeout(resolve, 500));
+              console.log("Comparative Answers:", comparativeAnswers.value);
+              submissionStatus.value.push("Comparative assessment submitted successfully.");
+            } catch (error) {
+              submissionStatus.value.push("Comparative assessment submission failed.");
+            }
+            surveyCompleted.value = true;
+          }
+
+          // For initialization after training
+          function initializeSurvey() {
+            currentCaseIndex.value = 0;
+            phase.value = "phase1";
+          }
+
+          // NEW: Subquestion system for phases 1-3
+          const currentSubquestionIndex = ref(0);
+          const questionStartTime = ref(Date.now());
+          const textResponse = ref("");
+          const phase1Responses = ref({});
+          const phase2Responses = ref({ });
+          const phase3Responses = ref({});
+
+          // Define questions for each phase.
+          const phase1Questions = [
+            { key: 'prediction', text: "Q1. Based on the explanation above, what do you think the model will predict for this case?", options: ["Class A", "Class B"] },
+            { key: 'confidence', text: "Q2. Rate your confidence in your prediction:", options: ["Not at all", "Slightly confident", "Moderately confident", "Confident", "Very confident"], type:"likert" }
+          ];
+          const phase2Questions = [
+            { key: 'decision', text: "Q3. What is your classification decision for this case?", options: ["Class A", "Class B"] },
+            { key: 'action', text: "Q4. Would you accept or override the model's prediction?", options: ["Accept", "Override"] },
+            { key: 'trust', text: "Q5. Rate your trust in the model's decision:", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"], type:"likert" }
+          ];
+          const phase2OverrideQuestion = { key: 'overrideReason', text: "Q6. Please briefly explain your reasoning:", type:"textarea" };
+          const phase3Questions = [
+            { key: 'problem', text: "Q7. Do you think there might be problems with the model's reasoning in this case?", options: ["No problems detected", "Minor concerns", "Significant concerns"] },
+            { key: 'concernDetail', text: "Q8. What aspects of the explanation led to your concerns?", type:"textarea" },
+            { key: 'assessmentConfidence', text:"Q9. How confident are you in your assessment?", options: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"], type:"likert" }
+          ];
+          
+          // computed list of questions based on phase (insert override Q if needed)
+          const currentPhaseQuestions = computed(() => {
+            if(phase.value==="phase1") return phase1Questions;
+            else if(phase.value==="phase2") {
+              let qs = [...phase2Questions];
+                if(phase2Responses.value['action'] && phase2Responses.value['action'].answer === "Override") {
+                console.log("Inserting override reason question...");
+                
+                const idx = qs.findIndex(q => q.key === 'action');
+                qs.splice(idx+1, 0, phase2OverrideQuestion);
+              }
+              return qs;
+            }
+            else if(phase.value==="phase3") return phase3Questions;
+            else return [];
+          });
+          
+          const getCurrentAnswer = (key) => {
+            if(phase.value==="phase1") return phase1Responses.value[key];
+            if(phase.value==="phase2") return phase2Responses.value[key];
+            if(phase.value==="phase3") return phase3Responses.value[key];
+            return null;
+          };
+          
+          const currentAnswerSelected = computed(() => {
+            const q = currentPhaseQuestions.value[currentSubquestionIndex.value];
+            const ans = getCurrentAnswer(q.key);
+            return ans && (ans.answer!==null && ans.answer!==undefined);
+          });
+          
+          function answerQuestion(answer) {
+            const q = currentPhaseQuestions.value[currentSubquestionIndex.value];
+            const timeTaken = Date.now() - questionStartTime.value;
+            if(phase.value==="phase1") {
+              phase1Responses.value[q.key] = { answer, timeTaken };
+            } else if(phase.value==="phase2") {
+              phase2Responses.value[q.key] = { answer, timeTaken };
+            } else if(phase.value==="phase3") {
+              phase3Responses.value[q.key] = { answer, timeTaken };
+            }
+          }
+          
+          function submitTextResponse() {
+            answerQuestion(textResponse.value);
+            textResponse.value = "";
+          }
+          
+          function nextQuestion() {
+            if(currentSubquestionIndex.value < currentPhaseQuestions.value.length - 1){
+              currentSubquestionIndex.value++;
+              questionStartTime.value = Date.now();
+            } else {
+              // Phase complete: store responses and move to next phase
+              if(phase.value==="phase1"){
+                phase1Answer.value = { ...phase1Responses.value };
+              } else if(phase.value==="phase2"){
+                phase2Answer.value = { ...phase2Responses.value };
+              } else if(phase.value==="phase3"){
+                phase3Answer.value = { ...phase3Responses.value };
+              }
+              // Reset subquestion index and responses for next phase
+              currentSubquestionIndex.value = 0;
+              questionStartTime.value = Date.now();
+              if(phase.value === "phase1") {
+                phase.value = "phase2";
+              } else if(phase.value === "phase2") {
+                phase.value = "phase3";
+              } else if(phase.value === "phase3") {
+                surveyResponses.value.push({
+                  case: currentCase.value,
+                  explanationMethod: currentMethod.value,
+                  phase1: phase1Answer.value,
+                  phase2: phase2Answer.value,
+                  phase3: phase3Answer.value
+                });
+                // reset for next case
+                phase1Responses.value = {}; phase2Responses.value = {}; phase3Responses.value = {};
+                phase1Answer.value = {}; phase2Answer.value = {}; phase3Answer.value = {};
+                if(currentCaseIndex.value < totalCases.value - 1){
+                  currentCaseIndex.value++;
+                  phase.value = "phase1";
+                } else {
+                  phase.value = "comparative";
+                }
+              }
+            }
+          }
+          
+          function prevQuestion() {
+            if(currentSubquestionIndex.value > 0){
+              currentSubquestionIndex.value--;
+              questionStartTime.value = Date.now();
+            }
+          }
+          
+          // Comparative assessment: one method at a time, one question at a time
+          const currentComparativeMethodIndex = ref(0);
+          const currentComparativeQuestionIndex = ref(0);
+          const comparativeQuestions = [
+            { key: 'help', text: "Q10. This explanation helps me understand the model's decision:", options: [1,2,3,4,5] },
+            { key: 'detail', text: "Q11. This explanation provides sufficient detail:", options: [1,2,3,4,5] },
+            { key: 'useful', text: "Q12. This explanation is useful for my decision making:", options: [1,2,3,4,5] },
+            { key: 'confidence', text: "Q13. This explanation gives me confidence in my choices:", options: [1,2,3,4,5] }
+          ];
+          const comparativeResponses = ref({});
+          // Initialize responses for each method
+          explanationMethods.forEach(method => {
+            comparativeResponses.value[method] = {};
+          });
+          const currentComparativeQuestions = computed(() => comparativeQuestions);
+          const currentComparativeMethod = computed(() => explanationMethods[currentComparativeMethodIndex.value]);
+          const getComparativeAnswer = (method, key) => comparativeResponses.value[method][key];
+          const currentComparativeAnswerSelected = computed(() => {
+            const q = currentComparativeQuestions.value[currentComparativeQuestionIndex.value];
+            const ans = getComparativeAnswer(currentComparativeMethod.value, q.key);
+            return ans && (ans.answer !== null && ans.answer !== undefined);
+          });
+          function answerComparativeQuestion(answer) {
+            const q = currentComparativeQuestions.value[currentComparativeQuestionIndex.value];
+            const timeTaken = Date.now() - comparativeQuestionStartTime.value;
+            comparativeResponses.value[currentComparativeMethod.value][q.key] = { answer, timeTaken };
+          }
+          const comparativeQuestionStartTime = ref(Date.now());
+          function nextComparativeQuestion(){
+            if(currentComparativeQuestionIndex.value < currentComparativeQuestions.value.length - 1){
+              currentComparativeQuestionIndex.value++;
+              comparativeQuestionStartTime.value = Date.now();
+            } else {
+              // Move to next method if available.
+              if(currentComparativeMethodIndex.value < explanationMethods.length - 1){
+                currentComparativeMethodIndex.value++;
+                currentComparativeQuestionIndex.value = 0;
+                comparativeQuestionStartTime.value = Date.now();
+              }
+            }
+          }
+          function prevComparativeQuestion(){
+            if(currentComparativeQuestionIndex.value > 0){
+              currentComparativeQuestionIndex.value--;
+              comparativeQuestionStartTime.value = Date.now();
+            }
+          }
+          const isFirstComparativeSubquestion = computed(() => currentComparativeQuestionIndex.value === 0 && currentComparativeMethodIndex.value===0);
+          const allComparativeDone = computed(() => {
+            return explanationMethods.every(method => {
+              return comparativeQuestions.every(q => comparativeResponses.value[method][q.key]);
+            });
+          });
+
+          return {
+            consentGiven,
+            giveConsent,
+            trainingCompleted,
+            trainingQuestion,
+            trainingAnswer,
+            selectTrainingAnswer,
+            completeTraining,
+            currentCase,
+            totalCases,
+            currentCaseIndex,
+            currentMethod,
+            phase,
+            phaseDisplay,
+            phase1Answer,
+            phase2Answer,
+            phase3Answer,
+            nextPhase,
+            prevPhase,
+            isPhaseComplete,
+            isFirstPhase,
+            surveyResponses,
+            surveyCompleted,
+            submissionStatus,
+            comparativeCase,
+            explanationMethods,
+            comparativeAnswers,
+            submitSurvey,
+            // New survey subquestion system
+            currentPhaseQuestions, currentSubquestionIndex, getCurrentAnswer, answerQuestion, submitTextResponse, textResponse,
+            nextQuestion, prevQuestion, currentAnswerSelected,
+            // Comparative phase
+            currentComparativeQuestions, currentComparativeMethod, currentComparativeQuestionIndex, answerComparativeQuestion,
+            nextComparativeQuestion, prevComparativeQuestion, currentComparativeAnswerSelected, isFirstComparativeSubquestion, allComparativeDone,
+            getComparativeAnswer // <<-- added this line
+          };
+        }
+      }).mount('#app');
     </script>
 </body>
 </html>
