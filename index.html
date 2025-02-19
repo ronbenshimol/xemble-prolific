@@ -268,9 +268,9 @@
           consentGiven: false,
           trainingCompleted: false,
           trainingQuestion: {
-            text: "How would you rate your familiarity with AI explanations?",
-            options: ["Not familiar", "Somewhat familiar", "Very familiar"],
-            explanation: "" // will be set once randomly
+            text: "For practice: Which color do you prefer?",
+            options: ["Blue", "Red", "Green", "Yellow"],
+            explanation: "Great! You've successfully selected an answer. This is how you'll answer questions in the survey."
           },
           trainingAnswer: null,
           
@@ -402,8 +402,6 @@
           // Explanation method selected only once (e.g., "Xemble" or "SHAP")
           currentMethod: "",
           
-          // Legacy explanation mapping (still shown with question explanation text)
-          surveyExplanations: {}
         }
       },
       computed: {
@@ -457,6 +455,9 @@
                   this.currentCase = randomSample;
                   this.currentCase.dataset = randomDataset.name;
                 }
+
+                // Randomly select one explanation method for all questions and sample display
+                this.currentMethod = Math.random() < 0.5 ? 'Xemble' : 'SHAP';
               }
             })
             .catch(error => console.error("Failed to load data.json:", error));
@@ -464,14 +465,7 @@
       },
       created() {
         this.fetchDatasets();
-        // Randomly select one explanation method for all questions and sample display
-        this.currentMethod = Math.random() < 0.5 ? 'Xemble' : 'SHAP';
-        // Legacy: assign the chosen method to all survey questions for the in-question explanation text
-        this.surveyQuestions.forEach(q => {
-          this.surveyExplanations[q.id] = this.currentMethod;
-        });
-        // Also assign the chosen method for the training question
-        this.trainingQuestion.explanation = this.currentMethod;
+        
       }
     }).mount('#app');
   </script>
