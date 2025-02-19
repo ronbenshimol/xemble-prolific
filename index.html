@@ -277,121 +277,7 @@
           // Survey Questions logic
           surveyStarted: false,
           surveyCompleted: false,
-          surveyQuestions: [
-            // 1. Clarity
-            {
-              id: "clarity_rating",
-              text: "On a scale from 1 (Not clear at all) to 9 (Extremely clear), how clearly did the explanation communicate how the ensemble reached its decision?",
-              type: "likert"
-            },
-            {
-              id: "clarity_open",
-              text: "What aspects of the explanation were unclear or confusing?",
-              type: "textarea"
-            },
-            // 2. Trustworthiness
-            {
-              id: "trust_rating",
-              text: "On a scale from 1 (Do not trust at all) to 9 (Fully trust), to what extent do you trust the explanation provided?",
-              type: "likert"
-            },
-            {
-              id: "trust_open",
-              text: "Did any part of the explanation increase or decrease your trust in the ensemble’s decision? If so, which part and why?",
-              type: "textarea"
-            },
-            // 3. Comprehensibility
-            {
-              id: "comprehensibility_rating",
-              text: "On a scale from 1 (Very difficult) to 9 (Very easy), how easy was it to understand the explanation?",
-              type: "likert"
-            },
-            {
-              id: "comprehensibility_detail",
-              text: "Did the explanation contain too much technical detail, too little, or was it balanced?",
-              type: "multiple",
-              options: ["Too much", "Too little", "Balanced"]
-            },
-            // 4. Satisfaction
-            {
-              id: "satisfaction_rating",
-              text: "On a scale from 1 (Not satisfied at all) to 9 (Extremely satisfied), how satisfied are you with the explanation provided?",
-              type: "likert"
-            },
-            {
-              id: "satisfaction_open",
-              text: "What could improve the explanation to better meet your needs?",
-              type: "textarea"
-            },
-            // 5. Usefulness
-            {
-              id: "Usefulness_rating",
-              text: "On a scale from 1 (Not useful at all) to 9 (Extremely useful), how useful was the explanation for understanding the ensemble's decision?",
-              type: "likert"
-            },
-            {
-              id: "Usefulness_open",
-              text: "How would you describe the usefulness of the explanation in a real-world decision-making scenario?",
-              type: "textarea"
-            },
-            // 6. Accuracy Perception
-            {
-              id: "accuracy_rating",
-              text: "On a scale from 1 (Very inaccurate) to 9 (Highly accurate), how accurate do you believe the ensemble's prediction was based on the explanation?",
-              type: "likert"
-            },
-            {
-              id: "accuracy_justification_rating",
-              text: "If the prediction was incorrect, how well did the explanation justify the error? (1 = Not at all, 9 = Fully justified)",
-              type: "likert"
-            },
-            // 7. Confidence in the Prediction
-            {
-              id: "confidence_rating",
-              text: "On a scale from 1 (Not confident at all) to 9 (Extremely confident), how confident are you in acting upon this prediction?",
-              type: "likert"
-            },
-            {
-              id: "confidence_info",
-              text: "What additional information would increase your confidence in the ensemble’s output?",
-              type: "textarea"
-            },
-            // 8. Transparency
-            {
-              id: "transparency_rating",
-              text: "On a scale from 1 (Not transparent at all) to 9 (Extremely transparent), how transparent did you find the ensemble’s decision-making process?",
-              type: "likert"
-            },
-            {
-              id: "transparency_yesno",
-              text: "Did the explanation clarify how different base learners contributed to the final decision?",
-              type: "multiple",
-              options: ["Yes", "No"]
-            },
-            // 9. Consistency
-            {
-              id: "consistency_rating",
-              text: "On a scale from 1 (Not consistent at all) to 9 (Highly consistent), how consistent was the explanation with what you expected from the ensemble’s decision?",
-              type: "likert"
-            },
-            {
-              id: "consistency_yes_no",
-              text: "If you were shown multiple decisions, do you feel the explanations were consistent across cases?",
-              type: "multiple",
-              options: ["Yes", "No"]
-            },
-            // 10. Relevance of Justifications
-            {
-              id: "relevance_rating",
-              text: "On a scale from 1 (Not relevant at all) to 9 (Highly relevant), how relevant were the justifications provided for the ensemble’s decision?",
-              type: "likert"
-            },
-            {
-              id: "relevance_open",
-              text: "Were there any justifications that seemed unnecessary or missing?",
-              type: "textarea"
-            }
-          ],
+          surveyQuestions: [],
           currentSurveyIndex: 0,
           answers: {},
           submissionStatus: [],
@@ -447,6 +333,7 @@
           fetch('https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json')
             .then(response => response.json())
             .then(data => {
+              this.surveyQuestions = data.questions;
               this.datasets = data.datasets;
               if (this.datasets.length) {
                 let randomDataset = this.datasets[Math.floor(Math.random() * this.datasets.length)];
