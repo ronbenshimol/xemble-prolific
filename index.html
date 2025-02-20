@@ -16,7 +16,7 @@
       background: #f5f5f5;
     }
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       background: white;
       padding: 20px;
@@ -212,13 +212,14 @@
         <!-- Likert Scale Questions -->
         <div v-if="currentSurveyQuestion.type==='likert'" class="likert-scale">
           <div
-            v-for="num in 9"
-            :key="num"
+            v-for="(label, index) in currentSurveyQuestion.options"
+            :key="index"
             class="likert-option"
-            :class="{ selected: answers[currentSurveyQuestion.id] === num }"
-            @click="answerSurvey(num)"
+            :class="{ selected: answers[currentSurveyQuestion.id] === index + 1 }"
+            @click="answerSurvey(index + 1)"
           >
-            <div>{{ num }}</div>
+            <div>{{ index + 1 }}</div>
+            <div class="likert-label">{{ label }}</div>
           </div>
         </div>
 
@@ -330,7 +331,7 @@
         },
         // Fetch dataset and select one random dataset sample
         fetchDatasets() {
-          fetch('https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json')
+          fetch('https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json?v=1.1')
             .then(response => response.json())
             .then(data => {
               this.surveyQuestions = data.questions;
