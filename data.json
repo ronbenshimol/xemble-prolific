@@ -113,7 +113,8 @@
       {
         "id": "clarity_rating",
         "text": "On a scale from 1 (Not clear at all) to 9 (Extremely clear), how clearly did the explanation communicate how the ensemble reached its decision?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Not clear at all", "Very unclear", "Somewhat unclear", "Slightly unclear", "Moderately clear", "Reasonably clear", "Very clear", "Almost extremely clear", "Extremely clear"]
       },
       {
         "id": "clarity_open",
@@ -123,7 +124,8 @@
       {
         "id": "trust_rating",
         "text": "On a scale from 1 (Do not trust at all) to 9 (Fully trust), to what extent do you trust the explanation provided?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Do not trust at all", "Highly distrust", "Moderately distrust", "Slightly distrust", "Neutral (Neither trust nor distrust)", "Slightly trust", "Moderately trust", "Highly trust", "Fully trust"]
       },
       {
         "id": "trust_open",
@@ -133,7 +135,8 @@
       {
         "id": "comprehensibility_rating",
         "text": "On a scale from 1 (Very difficult) to 9 (Very easy), how easy was it to understand the explanation?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Very difficult", "Difficult", "Slightly difficult", "Moderately difficult", "Neutral (Neither easy nor difficult)", "Slightly easy", "Moderately easy", "Easy", "Very easy"]
       },
       {
         "id": "comprehensibility_detail",
@@ -144,7 +147,8 @@
       {
         "id": "satisfaction_rating",
         "text": "On a scale from 1 (Not satisfied at all) to 9 (Extremely satisfied), how satisfied are you with the explanation provided?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Not satisfied at all", "Very unsatisfied", "Somewhat unsatisfied", "Slightly unsatisfied", "Moderately satisfied", "Reasonably satisfied", "Very satisfied", "Almost extremely satisfied", "Extremely satisfied"]
       },
       {
         "id": "satisfaction_open",
@@ -154,7 +158,8 @@
       {
         "id": "Usefulness_rating",
         "text": "On a scale from 1 (Not useful at all) to 9 (Extremely useful), how useful was the explanation for understanding the ensemble's decision?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Not useful at all", "Very useless", "Somewhat useless", "Slightly useless", "Moderately useful", "Reasonably useful", "Very useful", "Almost extremely useful", "Extremely useful"]
       },
       {
         "id": "Usefulness_open",
@@ -164,17 +169,20 @@
       {
         "id": "accuracy_rating",
         "text": "On a scale from 1 (Very inaccurate) to 9 (Highly accurate), how accurate do you believe the ensemble's prediction was based on the explanation?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Very inaccurate", "Inaccurate", "Slightly inaccurate", "Moderately inaccurate", "Neutral (Neither accurate nor inaccurate)", "Slightly accurate", "Moderately accurate", "Accurate", "Highly accurate"]
       },
       {
         "id": "accuracy_justification_rating",
         "text": "If the prediction was incorrect, how well did the explanation justify the error? (1 = Not at all, 9 = Fully justified)",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Not at all", "Very poorly", "Poorly", "Slightly poorly", "Neutral (Neither well nor poorly)", "Slightly well", "Moderately well", "Well", "Fully justified"]
       },
       {
         "id": "confidence_rating",
         "text": "On a scale from 1 (Not confident at all) to 9 (Extremely confident), how confident are you in acting upon this prediction?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Not confident at all", "Very unconfident", "Somewhat unconfident", "Slightly unconfident", "Moderately confident", "Reasonably confident", "Very confident", "Almost extremely confident", "Extremely confident"]
       },
       {
         "id": "confidence_info",
@@ -184,7 +192,8 @@
       {
         "id": "transparency_rating",
         "text": "On a scale from 1 (Not transparent at all) to 9 (Extremely transparent), how transparent did you find the ensemble’s decision-making process?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Not transparent at all", "Very opaque", "Somewhat opaque", "Slightly opaque", "Moderately transparent", "Reasonably transparent", "Very transparent", "Almost extremely transparent", "Extremely transparent"]
       },
       {
         "id": "transparency_yesno",
@@ -195,7 +204,8 @@
       {
         "id": "consistency_rating",
         "text": "On a scale from 1 (Not consistent at all) to 9 (Highly consistent), how consistent was the explanation with what you expected from the ensemble’s decision?",
-        "type": "likert"
+        "type": "likert",
+        "options": ["Not consistent at all", "Very inconsistent", "Somewhat inconsistent", "Slightly inconsistent", "Moderately consistent", "Reasonably consistent", "Very consistent", "Almost extremely consistent", "Highly consistent"]
       },
       {
         "id": "consistency_yes_no",
@@ -206,7 +216,8 @@
       {
         "id": "relevance_rating",
         "text": "On a scale from 1 (Not relevant at all) to 9 (Highly relevant), how relevant were the justifications provided for the ensemble’s decision?",
-        "type": "likert"
+        "type": "likert",
+        "options" : ["Not relevant at all", "Very irrelevant", "Somewhat irrelevant", "Slightly irrelevant", "Moderately relevant", "Reasonably relevant", "Very relevant", "Almost extremely relevant", "Highly relevant"]
       },
       {
         "id": "relevance_open",
