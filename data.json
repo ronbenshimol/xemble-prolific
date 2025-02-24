@@ -1,69 +1,462 @@
 {
     "datasets": [
       {
-        "name": "Healthcare Dataset",
+        "name": "Mobile Phone Prices",
         "complexity": "Medium",
         "samples": [
           {
             "id": 1,
             "features": {
-              "age": 45,
-              "blood_pressure": 120,
-              "cholesterol": 200
+              "ram": 0.2799190787904695,
+              "px_width": 0.07507532286551222,
+              "battery_power": -0.05970480682748846,
+              "m_dep": 0.027703025605200805,
+              "pc": 0.02660338077729104,
+              "n_cores": 0.016826208146637812,
+              "four_g": 0.015790893665607434,
+              "int_memory": -0.014398276746886176,
+              "px_height": 0.013696849574526318,
+              "talk_time": -0.0135030978314057,
+              "dual_sim": 0.01137681674684555,
+              "three_g": 0.00793947879706718,
+              "wifi": 0.007015283588124934,
+              "mobile_wt": 0.006947077037613735,
+              "sc_h": 0.006339436452159319,
+              "touch_screen": -0.005796005730474615,
+              "sc_w": 0.004799864250976772,
+              "clock_speed": 0.004331323680882289,
+              "fc": 0.004294334861953665,
+              "blue": 0.002232918241957681
             },
-            "ground_truth": "Class A",
-            "model_prediction": "Class A",
-            "confidence": 0.85,
+            "ground_truth": "2",
+            "model_prediction": "2",
+            "confidence": 0.7430933287939806,
             "explanations": {
               "Xemble": {
-                "votes": [{"model": "xgb1", "vote": 1}],
-                "text": "The model predicted Class A because the patient's age and cholesterol levels are within the normal range for this class."
+                "votes": [
+                  {
+                    "model": "rf",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "gb",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "gb2",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "gb3",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "svc",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "lr",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "ada",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "mlp",
+                    "vote": "2"
+                  }
+                ],
+                "text": "The ensemble AI predicts the outcome as \"2\" with an overall confidence level of 74.3%.\n\n2. The models show a high agreement level of 90%, indicating strong consensus among the different algorithms.\n\n3. This prediction is reliable because seven out of eight models, including the most accurate ones, agree on the same outcome, demonstrating a robust and consistent consensus."
               },
               "SHAP": {
-                "shap_values": [{"feature": "xgb1", "value": 1}],
-                "text": "The model predicted Class A because the patient's age and cholesterol levels are within the normal range for this class."
+                "shap_values": [
+                  {
+                    "feature": "ram",
+                    "value": 0.2799190787904695
+                  },
+                  {
+                    "feature": "px_width",
+                    "value": 0.07507532286551222
+                  },
+                  {
+                    "feature": "battery_power",
+                    "value": -0.05970480682748846
+                  },
+                  {
+                    "feature": "m_dep",
+                    "value": 0.027703025605200805
+                  },
+                  {
+                    "feature": "pc",
+                    "value": 0.02660338077729104
+                  },
+                  {
+                    "feature": "n_cores",
+                    "value": 0.016826208146637812
+                  },
+                  {
+                    "feature": "four_g",
+                    "value": 0.015790893665607434
+                  },
+                  {
+                    "feature": "int_memory",
+                    "value": -0.014398276746886176
+                  },
+                  {
+                    "feature": "px_height",
+                    "value": 0.013696849574526318
+                  },
+                  {
+                    "feature": "talk_time",
+                    "value": -0.0135030978314057
+                  },
+                  {
+                    "feature": "dual_sim",
+                    "value": 0.01137681674684555
+                  },
+                  {
+                    "feature": "three_g",
+                    "value": 0.00793947879706718
+                  },
+                  {
+                    "feature": "wifi",
+                    "value": 0.007015283588124934
+                  },
+                  {
+                    "feature": "mobile_wt",
+                    "value": 0.006947077037613735
+                  },
+                  {
+                    "feature": "sc_h",
+                    "value": 0.006339436452159319
+                  },
+                  {
+                    "feature": "touch_screen",
+                    "value": -0.005796005730474615
+                  },
+                  {
+                    "feature": "sc_w",
+                    "value": 0.004799864250976772
+                  },
+                  {
+                    "feature": "clock_speed",
+                    "value": 0.004331323680882289
+                  },
+                  {
+                    "feature": "fc",
+                    "value": 0.004294334861953665
+                  },
+                  {
+                    "feature": "blue",
+                    "value": 0.002232918241957681
+                  }
+                ],
+                "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.2799) and px_width (+0.0751). Although battery_power contributed negatively (-0.0597), its impact was outweighed by the strong positive effects of ram and px_width.\n\nFor class 3, both ram (+0.1006) and battery_power (+0.0946) showed positive influences. However, these were not as strong as the positive contributions for class 2, particularly the significant impact of ram. Additionally, px_width contributed negatively (-0.0861) for class 3, which further diminished its likelihood compared to class 2."
               }
             }
           },
           {
             "id": 2,
             "features": {
-              "age": 60,
-              "blood_pressure": 140,
-              "cholesterol": 240
+              "ram": 0.49054620720286696,
+              "battery_power": 0.0944370558405775,
+              "px_width": 0.0670577453949746,
+              "px_height": 0.020691262386256234,
+              "three_g": 0.010291381723078486,
+              "mobile_wt": -0.007804707454625755,
+              "touch_screen": -0.007342294835443316,
+              "int_memory": -0.0064919881350051275,
+              "four_g": -0.0062513764176994795,
+              "pc": -0.0056230791308685656,
+              "dual_sim": -0.0050382835949413654,
+              "sc_h": 0.004871863855478428,
+              "talk_time": 0.0022001083565203667,
+              "sc_w": 0.001967800426711437,
+              "wifi": -0.0017600685087151855,
+              "n_cores": 0.0014924332564720093,
+              "fc": -0.0009737909336310958,
+              "blue": 0.00066015214528293,
+              "m_dep": -0.00045277456011598606,
+              "clock_speed": -0.00031587707590136906
             },
-            "ground_truth": "Class B",
-            "model_prediction": "Class A",
-            "confidence": 0.65,
+            "ground_truth": "3",
+            "model_prediction": "3",
+            "confidence": 0.9185696284482754,
             "explanations": {
               "Xemble": {
-                "votes": [{"model": "xgb2", "vote": 2}],
-                "text": "The model predicted Class A due to the patient's slightly elevated blood pressure, but this may be an error as cholesterol is high."
+                "votes": [
+                  {
+                    "model": "rf",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "gb",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "gb2",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "gb3",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "svc",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "lr",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "ada",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "mlp",
+                    "vote": "3"
+                  }
+                ],
+                "text": "The ensemble AI predicts a category \"3\" with an overall confidence level of 91.9%.\n\n2. All models unanimously agree on this prediction, indicating a high level of reliability.\n\n3. The strong consensus across diverse models, each with high individual performance, reinforces the trustworthiness of this prediction, akin to a jury unanimously reaching the same verdict."
               },
               "SHAP": {
-                "shap_values": [{"feature": "xgb2", "value": 2}],
-                "text": "The model's prediction is influenced by the patient's age, but the high cholesterol level suggests Class B might be more accurate."
+                "shap_values": [
+                  {
+                    "feature": "ram",
+                    "value": 0.49054620720286696
+                  },
+                  {
+                    "feature": "battery_power",
+                    "value": 0.0944370558405775
+                  },
+                  {
+                    "feature": "px_width",
+                    "value": 0.0670577453949746
+                  },
+                  {
+                    "feature": "px_height",
+                    "value": 0.020691262386256234
+                  },
+                  {
+                    "feature": "three_g",
+                    "value": 0.010291381723078486
+                  },
+                  {
+                    "feature": "mobile_wt",
+                    "value": -0.007804707454625755
+                  },
+                  {
+                    "feature": "touch_screen",
+                    "value": -0.007342294835443316
+                  },
+                  {
+                    "feature": "int_memory",
+                    "value": -0.0064919881350051275
+                  },
+                  {
+                    "feature": "four_g",
+                    "value": -0.0062513764176994795
+                  },
+                  {
+                    "feature": "pc",
+                    "value": -0.0056230791308685656
+                  },
+                  {
+                    "feature": "dual_sim",
+                    "value": -0.0050382835949413654
+                  },
+                  {
+                    "feature": "sc_h",
+                    "value": 0.004871863855478428
+                  },
+                  {
+                    "feature": "talk_time",
+                    "value": 0.0022001083565203667
+                  },
+                  {
+                    "feature": "sc_w",
+                    "value": 0.001967800426711437
+                  },
+                  {
+                    "feature": "wifi",
+                    "value": -0.0017600685087151855
+                  },
+                  {
+                    "feature": "n_cores",
+                    "value": 0.0014924332564720093
+                  },
+                  {
+                    "feature": "fc",
+                    "value": -0.0009737909336310958
+                  },
+                  {
+                    "feature": "blue",
+                    "value": 0.00066015214528293
+                  },
+                  {
+                    "feature": "m_dep",
+                    "value": -0.00045277456011598606
+                  },
+                  {
+                    "feature": "clock_speed",
+                    "value": -0.00031587707590136906
+                  }
+                ],
+                "text": "The model predicts class 3 as the most likely outcome. The most influential features that pushed the prediction towards class 3 are ram (+0.4905), battery_power (+0.0944), and px_width (+0.0671). These features collectively contributed positively, strongly supporting the prediction for class 3.\n\nFor class 2, although the negative contributions from ram (-0.1256), battery_power (-0.0698), and px_width (-0.0492) were present, they were not sufficient to outweigh the positive influences seen in class 3. Similarly, for class 1, the negative impact of ram (-0.1918) and other features like n_cores (-0.0153) and int_memory (-0.0122) further reduced its likelihood compared to class 3. In class 0, the negative contributions from ram (-0.1731), battery_power (-0.0227), and px_width (-0.0163) also did not favor a prediction towards this class.\n\nOverall, the strong positive influence of ram, battery_power, and px_width for class 3 made it the most compelling choice for the model's prediction."
               }
             }
           },
           {
-            "id": 3,
+            "id": 1,
             "features": {
-              "age": 50,
-              "blood_pressure": 130,
-              "cholesterol": 220
+              "ram": 0.5471253896961155,
+              "battery_power": 0.08146776051887551,
+              "px_width": -0.05291299614677738,
+              "pc": 0.01691306859337856,
+              "touch_screen": 0.011576949306859052,
+              "n_cores": -0.01001647939515645,
+              "px_height": -0.009591667436386338,
+              "four_g": 0.008745619627022104,
+              "int_memory": 0.008554894540012894,
+              "sc_h": -0.007816977696883031,
+              "mobile_wt": -0.006619582661361773,
+              "dual_sim": 0.006313178177296646,
+              "clock_speed": -0.006055197748788165,
+              "sc_w": 0.004060117735764262,
+              "blue": -0.0026097535557942334,
+              "m_dep": -0.0018424574279036425,
+              "fc": 0.0014363964074362535,
+              "three_g": -0.0011293811428253247,
+              "wifi": -0.0007797828344744257,
+              "talk_time": -0.0003391047324390172
             },
-            "ground_truth": "Class A",
-            "model_prediction": "Class A",
-            "confidence": 0.90,
+            "ground_truth": "3",
+            "model_prediction": "3",
+            "confidence": 0.8528878523309744,
             "explanations": {
               "Xemble": {
-                "votes": [{"model": "xgb2", "vote": 3}],
-                "text": "The model predicted Class A because the patient's blood pressure and cholesterol levels are consistent with this class."
+                "votes": [
+                  {
+                    "model": "rf",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "gb",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "gb2",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "gb3",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "svc",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "lr",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "ada",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "mlp",
+                    "vote": "3"
+                  }
+                ],
+                "text": "The ensemble AI predicts a value of \"3\" with an overall confidence level of 85.3%. All models unanimously agree on this prediction, indicating a high level of reliability. This consensus across diverse models, each with strong performance metrics, enhances trust in the prediction's accuracy and practical applicability."
               },
               "SHAP": {
-                "shap_values": [{"feature": "xgb2", "value": 3}],
-                "text": "The patient's age and blood pressure are the key factors driving the prediction for Class A."
+                "shap_values": [
+                  {
+                    "feature": "ram",
+                    "value": 0.5471253896961155
+                  },
+                  {
+                    "feature": "battery_power",
+                    "value": 0.08146776051887551
+                  },
+                  {
+                    "feature": "px_width",
+                    "value": -0.05291299614677738
+                  },
+                  {
+                    "feature": "pc",
+                    "value": 0.01691306859337856
+                  },
+                  {
+                    "feature": "touch_screen",
+                    "value": 0.011576949306859052
+                  },
+                  {
+                    "feature": "n_cores",
+                    "value": -0.01001647939515645
+                  },
+                  {
+                    "feature": "px_height",
+                    "value": -0.009591667436386338
+                  },
+                  {
+                    "feature": "four_g",
+                    "value": 0.008745619627022104
+                  },
+                  {
+                    "feature": "int_memory",
+                    "value": 0.008554894540012894
+                  },
+                  {
+                    "feature": "sc_h",
+                    "value": -0.007816977696883031
+                  },
+                  {
+                    "feature": "mobile_wt",
+                    "value": -0.006619582661361773
+                  },
+                  {
+                    "feature": "dual_sim",
+                    "value": 0.006313178177296646
+                  },
+                  {
+                    "feature": "clock_speed",
+                    "value": -0.006055197748788165
+                  },
+                  {
+                    "feature": "sc_w",
+                    "value": 0.004060117735764262
+                  },
+                  {
+                    "feature": "blue",
+                    "value": -0.0026097535557942334
+                  },
+                  {
+                    "feature": "m_dep",
+                    "value": -0.0018424574279036425
+                  },
+                  {
+                    "feature": "fc",
+                    "value": 0.0014363964074362535
+                  },
+                  {
+                    "feature": "three_g",
+                    "value": -0.0011293811428253247
+                  },
+                  {
+                    "feature": "wifi",
+                    "value": -0.0007797828344744257
+                  },
+                  {
+                    "feature": "talk_time",
+                    "value": -0.0003391047324390172
+                  }
+                ],
+                "text": "The model predicts class 3 as the most likely outcome. The most influential features that pushed the prediction towards class 3 are ram (+0.5471) and battery_power (+0.0815). Although px_width contributed negatively (-0.0529), its impact was outweighed by the strong positive effects of ram and battery_power.\n\nFor class 2, px_width showed a positive influence (+0.0368), but it wasn't enough to overcome the strong impact of ram favoring class 3. Additionally, battery_power contributed negatively (-0.0631) for class 2, further reducing its likelihood.\n\nIn comparison, class 0 had a slight positive contribution from px_width (+0.0249), but this was overshadowed by the negative influence of ram (-0.2487), making class 3 a more compelling choice. The model's decision is clearly driven by the significant positive impact of ram and battery_power, which strongly support the prediction of class 3."
               }
             }
           }
