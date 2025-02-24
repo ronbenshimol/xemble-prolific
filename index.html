@@ -132,7 +132,28 @@
       margin-top: 10px;
       color: #555;
     }
-
+    .progress-info {
+      margin: 20px 0;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .votes-table {
+      width: 100%;
+      max-width: 400px;
+      margin: 10px 0;
+      border-collapse: collapse;
+    }
+    .votes-table th,
+    .votes-table td {
+      padding: 8px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    .votes-table th {
+      background-color: #f5f5f5;
+    }
   </style>
 </head>
 <body>
@@ -200,10 +221,47 @@
               </tr>
             </tbody>
           </table>
-          <p>
+          <div>
             <strong>Explanation ({{ currentMethod }}):</strong>
-            {{ currentCase.explanations[currentMethod] }}
-          </p>
+            
+            <!-- Table for Xemble votes -->
+            <template v-if="currentMethod === 'Xemble' && currentCase?.explanations?.Xemble?.votes">
+              <table class="votes-table">
+                <thead>
+                  <tr>
+                    <th>Model</th>
+                    <th>Vote</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="vote in currentCase.explanations.Xemble.votes" :key="vote.model">
+                    <td>{{ vote.model }}</td>
+                    <td>{{ vote.vote }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>{{ currentCase.explanations.Xemble.text }}</p>
+            </template>
+            
+            <!-- SHAP explanation -->
+            <template v-if="currentMethod === 'SHAP' && currentCase?.explanations?.SHAP?.shap_values">
+              <table class="votes-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="shapValue in currentCase.explanations.SHAP.shap_values" :key="shapValue.feature">
+                    <td>{{ shapValue.feature }}</td>
+                    <td>{{ shapValue.value.toFixed(3) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>{{ currentCase.explanations.SHAP.text }}</p>
+            </template>
+          </div>
         </div>
 
         <!-- Display Question Text and Options -->
@@ -215,7 +273,7 @@
             v-for="(label, index) in currentSurveyQuestion.options"
             :key="index"
             class="likert-option"
-            :class="{ selected: answers[currentSurveyQuestion.id] === index + 1 }"
+            :class="{ selected: currentSampleAnswers[currentSurveyQuestion.id] === index + 1 }"
             @click="answerSurvey(index + 1)"
           >
             <div>{{ index + 1 }}</div>
@@ -229,7 +287,7 @@
             v-for="option in currentSurveyQuestion.options"
             :key="option"
             class="option"
-            :class="{ selected: answers[currentSurveyQuestion.id] === option }"
+            :class="{ selected: currentSampleAnswers[currentSurveyQuestion.id] === option }"
             @click="answerSurvey(option)"
           >
             {{ option }}
@@ -238,14 +296,29 @@
 
         <!-- Open-ended Questions -->
         <div v-else-if="currentSurveyQuestion.type==='textarea'">
-          <textarea v-model="answers[currentSurveyQuestion.id]" placeholder="Enter your answer here..." style="width: 100%; min-height: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+          <textarea v-model="currentSampleAnswers[currentSurveyQuestion.id]" placeholder="Enter your answer here..." style="width: 100%; min-height: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
         </div>
       </div>
 
+      <div class="progress-info">
+        <p>Sample {{ currentSampleIndex + 1 }} of {{ randomDataset?.samples.length || 0 }}</p>
+        <p>Overall Progress: {{ totalProgress }}</p>
+      </div>
+
       <div class="buttons">
-        <button @click="prevSurveyQuestion" :disabled="currentSurveyIndex === 0">Previous</button>
-        <button v-if="!isLastSurveyQuestion" @click="nextSurveyQuestion" :disabled="answers[currentSurveyQuestion.id] === undefined || answers[currentSurveyQuestion.id] === ''" style="margin-left: auto;">Next</button>
-        <button v-else @click="submitSurvey" :disabled="answers[currentSurveyQuestion.id] === undefined || answers[currentSurveyQuestion.id] === ''" style="margin-left: auto;">Submit Survey</button>
+        <button @click="prevSurveyQuestion" :disabled="currentSurveyIndex === 0 && currentSampleIndex === 0">Previous</button>
+        <button 
+          v-if="!(isLastSurveyQuestion && isLastSample)" 
+          @click="nextSurveyQuestion" 
+          :disabled="currentSampleAnswers[currentSurveyQuestion.id] === undefined || currentSampleAnswers[currentSurveyQuestion.id] === ''" 
+          style="margin-left: auto;"
+        >Next</button>
+        <button 
+          v-else 
+          @click="submitSurvey" 
+          :disabled="currentSampleAnswers[currentSurveyQuestion.id] === undefined || currentSampleAnswers[currentSurveyQuestion.id] === ''" 
+          style="margin-left: auto;"
+        >Submit Survey</button>
       </div>
       <div class="current-question">
         Question {{ currentSurveyIndex + 1 }} of {{ surveyQuestions.length }}
@@ -288,6 +361,10 @@
           currentCase: null,
           // Explanation method selected only once (e.g., "Xemble" or "SHAP")
           currentMethod: "",
+          currentSampleIndex: 0,
+          randomDataset: null,
+          currentSampleAnswers: {},     // Answers for current sample
+          allSamplesAnswers: [],        // Array to store all samples' answers
           
         }
       },
@@ -297,6 +374,15 @@
         },
         isLastSurveyQuestion() {
           return this.currentSurveyIndex === this.surveyQuestions.length - 1;
+        },
+        isLastSample() {
+          return this.currentSampleIndex === this.randomDataset.samples.length - 1;
+        },
+        totalProgress() {
+          if (!this.randomDataset) return '0%';
+          const totalQuestions = this.surveyQuestions.length * this.randomDataset.samples.length;
+          const answeredQuestions = (this.currentSampleIndex * this.surveyQuestions.length) + (this.currentSurveyIndex + 1);
+          return Math.round((answeredQuestions / totalQuestions) * 100) + '%';
         }
       },
       methods: {
@@ -314,37 +400,63 @@
         nextSurveyQuestion() {
           if (this.currentSurveyIndex < this.surveyQuestions.length - 1) {
             this.currentSurveyIndex++;
+          } else if (!this.isLastSample) {
+            // Save current sample answers
+            this.allSamplesAnswers[this.currentSampleIndex] = {
+              sampleId: this.currentCase.id,
+              answers: { ...this.currentSampleAnswers }
+            };
+            // Move to next sample
+            this.currentSampleIndex++;
+            this.currentSurveyIndex = 0;
+            this.currentCase = this.randomDataset.samples[this.currentSampleIndex];
+            // Clear answers for new sample
+            this.currentSampleAnswers = {};
           }
         },
         prevSurveyQuestion() {
           if (this.currentSurveyIndex > 0) {
             this.currentSurveyIndex--;
+          } else if (this.currentSampleIndex > 0) {
+            // Save current sample answers
+            this.allSamplesAnswers[this.currentSampleIndex] = {
+              sampleId: this.currentCase.id,
+              answers: { ...this.currentSampleAnswers }
+            };
+            // Move to previous sample
+            this.currentSampleIndex--;
+            this.currentSurveyIndex = this.surveyQuestions.length - 1;
+            this.currentCase = this.randomDataset.samples[this.currentSampleIndex];
+            // Restore previous sample's answers
+            this.currentSampleAnswers = this.allSamplesAnswers[this.currentSampleIndex]?.answers || {};
           }
         },
         answerSurvey(answer) {
-          this.answers[this.currentSurveyQuestion.id] = answer;
+          this.currentSampleAnswers[this.currentSurveyQuestion.id] = answer;
         },
         submitSurvey() {
-          console.log("Survey answers:", this.answers);
+          // Save answers for the last sample
+          this.allSamplesAnswers[this.currentSampleIndex] = {
+            sampleId: this.currentCase.id,
+            answers: { ...this.currentSampleAnswers }
+          };
+          console.log("All samples answers:", this.allSamplesAnswers);
           this.submissionStatus.push("Survey submitted successfully.");
           this.surveyCompleted = true;
         },
         // Fetch dataset and select one random dataset sample
         fetchDatasets() {
-          fetch('https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json?v=1.1')
+          fetch('https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json?v=3.0')
             .then(response => response.json())
             .then(data => {
               this.surveyQuestions = data.questions;
               this.datasets = data.datasets;
               if (this.datasets.length) {
-                let randomDataset = this.datasets[Math.floor(Math.random() * this.datasets.length)];
-                if (randomDataset.samples && randomDataset.samples.length) {
-                  let randomSample = randomDataset.samples[Math.floor(Math.random() * randomDataset.samples.length)];
-                  this.currentCase = randomSample;
-                  this.currentCase.dataset = randomDataset.name;
+                this.randomDataset = this.datasets[Math.floor(Math.random() * this.datasets.length)];
+                if (this.randomDataset.samples && this.randomDataset.samples.length) {
+                  this.currentCase = this.randomDataset.samples[0];
+                  this.currentCase.dataset = this.randomDataset.name;
                 }
-
-                // Randomly select one explanation method for all questions and sample display
                 this.currentMethod = Math.random() < 0.5 ? 'Xemble' : 'SHAP';
               }
             })
