@@ -5,32 +5,184 @@
         "complexity": "Medium",
         "samples": [
           {
-            "id": 1,
+            "id": 0,
             "features": {
-              "ram": 0.2799190787904695,
-              "px_width": 0.07507532286551222,
-              "battery_power": -0.05970480682748846,
-              "m_dep": 0.027703025605200805,
-              "pc": 0.02660338077729104,
-              "n_cores": 0.016826208146637812,
-              "four_g": 0.015790893665607434,
-              "int_memory": -0.014398276746886176,
-              "px_height": 0.013696849574526318,
-              "talk_time": -0.0135030978314057,
-              "dual_sim": 0.01137681674684555,
-              "three_g": 0.00793947879706718,
-              "wifi": 0.007015283588124934,
-              "mobile_wt": 0.006947077037613735,
-              "sc_h": 0.006339436452159319,
-              "touch_screen": -0.005796005730474615,
-              "sc_w": 0.004799864250976772,
-              "clock_speed": 0.004331323680882289,
-              "fc": 0.004294334861953665,
-              "blue": 0.002232918241957681
+              "battery_power": 826.0,
+              "blue": 0.0,
+              "clock_speed": 0.6,
+              "dual_sim": 0.0,
+              "fc": 3.0,
+              "four_g": 0.0,
+              "int_memory": 62.0,
+              "m_dep": 0.7,
+              "mobile_wt": 187.0,
+              "n_cores": 4.0,
+              "pc": 19.0,
+              "px_height": 778.0,
+              "px_width": 1615.0,
+              "ram": 1998.0,
+              "sc_h": 17.0,
+              "sc_w": 4.0,
+              "talk_time": 17.0,
+              "three_g": 0.0,
+              "touch_screen": 0.0,
+              "wifi": 0.0
             },
             "ground_truth": "2",
             "model_prediction": "2",
-            "confidence": 0.7430933287939806,
+            "confidence": 0.4934421341992732,
+            "explanations": {
+              "Xemble": {
+                "votes": [
+                  {
+                    "model": "rf",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "gb",
+                    "vote": "1"
+                  },
+                  {
+                    "model": "gb2",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "gb3",
+                    "vote": "3"
+                  },
+                  {
+                    "model": "svc",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "lr",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "ada",
+                    "vote": "2"
+                  },
+                  {
+                    "model": "mlp",
+                    "vote": "0"
+                  }
+                ],
+                "text": "The ensemble AI predicts a category \"2\" with an overall confidence level of 49.3%.  \nThere is a 71.7% agreement among the models, indicating a moderate level of consensus.  \nThe reliability of this prediction is supported by the fact that the majority of models, including high-performing ones like Random Forest and Support Vector Classifier, agree on the outcome."
+              },
+              "SHAP": {
+                "shap_values": [
+                  {
+                    "feature": "ram",
+                    "value": 0.07908604095500774
+                  },
+                  {
+                    "feature": "int_memory",
+                    "value": 0.0369273030512447
+                  },
+                  {
+                    "feature": "touch_screen",
+                    "value": 0.02323681182918239
+                  },
+                  {
+                    "feature": "three_g",
+                    "value": -0.018848810682223
+                  },
+                  {
+                    "feature": "talk_time",
+                    "value": -0.0165704046901249
+                  },
+                  {
+                    "feature": "mobile_wt",
+                    "value": 0.011658566732446855
+                  },
+                  {
+                    "feature": "clock_speed",
+                    "value": 0.01152735309001384
+                  },
+                  {
+                    "feature": "sc_h",
+                    "value": 0.008927774412147782
+                  },
+                  {
+                    "feature": "four_g",
+                    "value": 0.008461168965099405
+                  },
+                  {
+                    "feature": "battery_power",
+                    "value": -0.007531417961026777
+                  },
+                  {
+                    "feature": "pc",
+                    "value": -0.006052773624824922
+                  },
+                  {
+                    "feature": "sc_w",
+                    "value": 0.005801119983272758
+                  },
+                  {
+                    "feature": "m_dep",
+                    "value": 0.003483448185805853
+                  },
+                  {
+                    "feature": "blue",
+                    "value": 0.00331970771552012
+                  },
+                  {
+                    "feature": "n_cores",
+                    "value": 0.002977707462195006
+                  },
+                  {
+                    "feature": "px_height",
+                    "value": 0.0026922425689522534
+                  },
+                  {
+                    "feature": "px_width",
+                    "value": 0.002591747116892207
+                  },
+                  {
+                    "feature": "wifi",
+                    "value": -0.0014969912893633107
+                  },
+                  {
+                    "feature": "dual_sim",
+                    "value": -0.00034664344875912816
+                  },
+                  {
+                    "feature": "fc",
+                    "value": 0.0001411088570160224
+                  }
+                ],
+                "text": "The model predicts class 2 as the most likely outcome. The most influential features supporting this prediction are ram (+0.0791) and int_memory (+0.0369), which both contributed positively to the likelihood of class 2. Additionally, the presence of a touch_screen (+0.0232) further supported this prediction, albeit to a lesser extent.\n\nWhen considering class 1 as an alternative, ram also had a positive influence (+0.1994), and talk_time contributed positively (+0.0322). However, the negative impact of int_memory (-0.0359) reduced its overall likelihood compared to class 2. For class 0, battery_power had a slight positive influence (+0.0318), but the negative contribution from ram (-0.1372) made it less favorable. \n\nUltimately, the positive contributions of ram, int_memory, and touch_screen for class 2 outweighed the influences for other classes, leading to the model's prediction."
+              }
+            }
+          },
+          {
+            "id": 1,
+            "features": {
+              "battery_power": 1213.0,
+              "blue": 1.0,
+              "clock_speed": 0.5,
+              "dual_sim": 0.0,
+              "fc": 0.0,
+              "four_g": 0.0,
+              "int_memory": 16.0,
+              "m_dep": 0.5,
+              "mobile_wt": 108.0,
+              "n_cores": 5.0,
+              "pc": 0.0,
+              "px_height": 226.0,
+              "px_width": 1248.0,
+              "ram": 2700.0,
+              "sc_h": 12.0,
+              "sc_w": 3.0,
+              "talk_time": 9.0,
+              "three_g": 0.0,
+              "touch_screen": 0.0,
+              "wifi": 1.0
+            },
+            "ground_truth": "2",
+            "model_prediction": "2",
+            "confidence": 0.7155808280892927,
             "explanations": {
               "Xemble": {
                 "votes": [
@@ -48,7 +200,7 @@
                   },
                   {
                     "model": "gb3",
-                    "vote": "2"
+                    "vote": "3"
                   },
                   {
                     "model": "svc",
@@ -60,143 +212,143 @@
                   },
                   {
                     "model": "ada",
-                    "vote": "3"
+                    "vote": "2"
                   },
                   {
                     "model": "mlp",
-                    "vote": "2"
+                    "vote": "3"
                   }
                 ],
-                "text": "The ensemble AI predicts the outcome as \"2\" with an overall confidence level of 74.3%. The models show a high agreement level of 90%, indicating strong consensus among the different algorithms. This prediction is reliable because seven out of eight models, including the most accurate ones, agree on the same outcome, demonstrating a robust and consistent consensus."
+                "text": "1. The ensemble AI predicts a category \"2\" with a confidence level of 71.6%.  \n2. An agreement level of 87.7% among the models indicates strong consensus, enhancing the prediction's reliability.  \n3. This prediction is trustworthy as six out of eight models, including the top performers, agree on the outcome, supporting a robust decision-making process."
               },
               "SHAP": {
                 "shap_values": [
                   {
                     "feature": "ram",
-                    "value": 0.2799190787904695
-                  },
-                  {
-                    "feature": "px_width",
-                    "value": 0.07507532286551222
+                    "value": 0.28023639049985993
                   },
                   {
                     "feature": "battery_power",
-                    "value": -0.05970480682748846
-                  },
-                  {
-                    "feature": "m_dep",
-                    "value": 0.027703025605200805
-                  },
-                  {
-                    "feature": "pc",
-                    "value": 0.02660338077729104
-                  },
-                  {
-                    "feature": "n_cores",
-                    "value": 0.016826208146637812
-                  },
-                  {
-                    "feature": "four_g",
-                    "value": 0.015790893665607434
-                  },
-                  {
-                    "feature": "int_memory",
-                    "value": -0.014398276746886176
+                    "value": 0.043736770279776654
                   },
                   {
                     "feature": "px_height",
-                    "value": 0.013696849574526318
+                    "value": 0.0300450572681565
                   },
                   {
-                    "feature": "talk_time",
-                    "value": -0.0135030978314057
-                  },
-                  {
-                    "feature": "dual_sim",
-                    "value": 0.01137681674684555
+                    "feature": "px_width",
+                    "value": 0.020863129520546378
                   },
                   {
                     "feature": "three_g",
-                    "value": 0.00793947879706718
+                    "value": -0.019699600281131217
                   },
                   {
-                    "feature": "wifi",
-                    "value": 0.007015283588124934
-                  },
-                  {
-                    "feature": "mobile_wt",
-                    "value": 0.006947077037613735
-                  },
-                  {
-                    "feature": "sc_h",
-                    "value": 0.006339436452159319
+                    "feature": "pc",
+                    "value": 0.019188481016811053
                   },
                   {
                     "feature": "touch_screen",
-                    "value": -0.005796005730474615
+                    "value": 0.01865558684475723
                   },
                   {
-                    "feature": "sc_w",
-                    "value": 0.004799864250976772
+                    "feature": "int_memory",
+                    "value": -0.013604927156168897
                   },
                   {
-                    "feature": "clock_speed",
-                    "value": 0.004331323680882289
+                    "feature": "four_g",
+                    "value": 0.012908613672082151
+                  },
+                  {
+                    "feature": "n_cores",
+                    "value": 0.009317339935210433
                   },
                   {
                     "feature": "fc",
-                    "value": 0.004294334861953665
+                    "value": 0.00821698888430697
+                  },
+                  {
+                    "feature": "talk_time",
+                    "value": 0.00802102099925366
+                  },
+                  {
+                    "feature": "sc_w",
+                    "value": 0.004539604397326608
+                  },
+                  {
+                    "feature": "m_dep",
+                    "value": 0.004225226239874026
+                  },
+                  {
+                    "feature": "sc_h",
+                    "value": 0.004079684044134018
+                  },
+                  {
+                    "feature": "mobile_wt",
+                    "value": -0.002806466147391444
                   },
                   {
                     "feature": "blue",
-                    "value": 0.002232918241957681
+                    "value": -0.0027267355633672696
+                  },
+                  {
+                    "feature": "wifi",
+                    "value": 0.0026090370406095303
+                  },
+                  {
+                    "feature": "clock_speed",
+                    "value": 0.002134150993013757
+                  },
+                  {
+                    "feature": "dual_sim",
+                    "value": -0.0004998103253281599
                   }
                 ],
-                "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.2799) and px_width (+0.0751). Although battery_power contributed negatively (-0.0597), its impact was outweighed by the strong positive effects of ram and px_width.\n\nFor class 3, both ram (+0.1006) and battery_power (+0.0946) showed positive influences. However, these were not as strong as the positive contributions for class 2, particularly the significant impact of ram. Additionally, px_width contributed negatively (-0.0861) for class 3, which further diminished its likelihood compared to class 2."
+                "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.2802), battery_power (+0.0437), and px_height (+0.0300). These features collectively provided a strong positive influence, significantly outweighing any negative contributions.\n\nWhen comparing with class 0, although battery_power had a slight positive influence (+0.0120), it was not enough to counterbalance the negative impact of ram (-0.1839) and pc (-0.0069), which leaned away from class 0. Similarly, for class 1, three_g had a minor positive effect (+0.0164), but the negative influence of ram (-0.0965) and touch_screen (-0.0161) did not support class 1 as strongly as the features did for class 2.\n\nIn contrast, class 3 was not a strong contender due to the negative contributions from battery_power (-0.0475), px_height (-0.0273), and px_width (-0.0228), which did not favor class 3. Overall, the positive influences for class 2 were compelling enough to make it the predicted outcome."
               }
             }
           },
           {
             "id": 2,
             "features": {
-              "ram": 0.49054620720286696,
-              "battery_power": 0.0944370558405775,
-              "px_width": 0.0670577453949746,
-              "px_height": 0.020691262386256234,
-              "three_g": 0.010291381723078486,
-              "mobile_wt": -0.007804707454625755,
-              "touch_screen": -0.007342294835443316,
-              "int_memory": -0.0064919881350051275,
-              "four_g": -0.0062513764176994795,
-              "pc": -0.0056230791308685656,
-              "dual_sim": -0.0050382835949413654,
-              "sc_h": 0.004871863855478428,
-              "talk_time": 0.0022001083565203667,
-              "sc_w": 0.001967800426711437,
-              "wifi": -0.0017600685087151855,
-              "n_cores": 0.0014924332564720093,
-              "fc": -0.0009737909336310958,
-              "blue": 0.00066015214528293,
-              "m_dep": -0.00045277456011598606,
-              "clock_speed": -0.00031587707590136906
+              "battery_power": 1656.0,
+              "blue": 1.0,
+              "clock_speed": 1.6,
+              "dual_sim": 1.0,
+              "fc": 0.0,
+              "four_g": 0.0,
+              "int_memory": 16.0,
+              "m_dep": 1.0,
+              "mobile_wt": 117.0,
+              "n_cores": 7.0,
+              "pc": 2.0,
+              "px_height": 320.0,
+              "px_width": 899.0,
+              "ram": 2856.0,
+              "sc_h": 14.0,
+              "sc_w": 3.0,
+              "talk_time": 20.0,
+              "three_g": 1.0,
+              "touch_screen": 1.0,
+              "wifi": 1.0
             },
-            "ground_truth": "3",
-            "model_prediction": "3",
-            "confidence": 0.9185696284482754,
+            "ground_truth": "2",
+            "model_prediction": "2",
+            "confidence": 0.6038604023233917,
             "explanations": {
               "Xemble": {
                 "votes": [
                   {
                     "model": "rf",
-                    "vote": "3"
+                    "vote": "2"
                   },
                   {
                     "model": "gb",
-                    "vote": "3"
+                    "vote": "2"
                   },
                   {
                     "model": "gb2",
-                    "vote": "3"
+                    "vote": "2"
                   },
                   {
                     "model": "gb3",
@@ -204,11 +356,11 @@
                   },
                   {
                     "model": "svc",
-                    "vote": "3"
+                    "vote": "2"
                   },
                   {
                     "model": "lr",
-                    "vote": "3"
+                    "vote": "2"
                   },
                   {
                     "model": "ada",
@@ -219,136 +371,136 @@
                     "vote": "3"
                   }
                 ],
-                "text": "The ensemble AI predicts a category \"3\" with an overall confidence level of 91.9%. All models unanimously agree on this prediction, indicating a high level of reliability. The strong consensus across diverse models, each with high individual performance, reinforces the trustworthiness of this prediction, akin to a jury unanimously reaching the same verdict."
+                "text": "1. The ensemble AI predicts a category \"2\" with an overall confidence level of 60.4%.\n\n2. There is a 75.7% agreement among the models, indicating a strong consensus towards this prediction.\n\n3. This prediction is reliable because the majority of high-performing models, such as Random Forest and Support Vector Classifier, agree on this outcome, providing a solid foundation for decision-making."
               },
               "SHAP": {
                 "shap_values": [
                   {
                     "feature": "ram",
-                    "value": 0.49054620720286696
+                    "value": 0.18836130235922366
                   },
                   {
                     "feature": "battery_power",
-                    "value": 0.0944370558405775
+                    "value": -0.05985509740299197
                   },
                   {
                     "feature": "px_width",
-                    "value": 0.0670577453949746
-                  },
-                  {
-                    "feature": "px_height",
-                    "value": 0.020691262386256234
-                  },
-                  {
-                    "feature": "three_g",
-                    "value": 0.010291381723078486
-                  },
-                  {
-                    "feature": "mobile_wt",
-                    "value": -0.007804707454625755
-                  },
-                  {
-                    "feature": "touch_screen",
-                    "value": -0.007342294835443316
-                  },
-                  {
-                    "feature": "int_memory",
-                    "value": -0.0064919881350051275
-                  },
-                  {
-                    "feature": "four_g",
-                    "value": -0.0062513764176994795
+                    "value": 0.041963010622414094
                   },
                   {
                     "feature": "pc",
-                    "value": -0.0056230791308685656
-                  },
-                  {
-                    "feature": "dual_sim",
-                    "value": -0.0050382835949413654
-                  },
-                  {
-                    "feature": "sc_h",
-                    "value": 0.004871863855478428
-                  },
-                  {
-                    "feature": "talk_time",
-                    "value": 0.0022001083565203667
-                  },
-                  {
-                    "feature": "sc_w",
-                    "value": 0.001967800426711437
-                  },
-                  {
-                    "feature": "wifi",
-                    "value": -0.0017600685087151855
-                  },
-                  {
-                    "feature": "n_cores",
-                    "value": 0.0014924332564720093
-                  },
-                  {
-                    "feature": "fc",
-                    "value": -0.0009737909336310958
-                  },
-                  {
-                    "feature": "blue",
-                    "value": 0.00066015214528293
+                    "value": 0.02461378754812086
                   },
                   {
                     "feature": "m_dep",
-                    "value": -0.00045277456011598606
+                    "value": 0.02063070067025698
+                  },
+                  {
+                    "feature": "int_memory",
+                    "value": -0.01531684947458503
+                  },
+                  {
+                    "feature": "n_cores",
+                    "value": 0.015297872407837754
+                  },
+                  {
+                    "feature": "px_height",
+                    "value": 0.012312810189824495
+                  },
+                  {
+                    "feature": "touch_screen",
+                    "value": -0.011721238906308764
+                  },
+                  {
+                    "feature": "sc_h",
+                    "value": 0.010994978560481077
+                  },
+                  {
+                    "feature": "four_g",
+                    "value": 0.010735631788041454
+                  },
+                  {
+                    "feature": "dual_sim",
+                    "value": 0.0092236163279078
+                  },
+                  {
+                    "feature": "wifi",
+                    "value": 0.007511798602731807
+                  },
+                  {
+                    "feature": "three_g",
+                    "value": 0.007166426370420977
+                  },
+                  {
+                    "feature": "talk_time",
+                    "value": -0.00668779719185873
                   },
                   {
                     "feature": "clock_speed",
-                    "value": -0.00031587707590136906
+                    "value": 0.004794273764963359
+                  },
+                  {
+                    "feature": "fc",
+                    "value": 0.003440055370016743
+                  },
+                  {
+                    "feature": "mobile_wt",
+                    "value": 0.0033263923162204167
+                  },
+                  {
+                    "feature": "sc_w",
+                    "value": 0.0027711508841479224
+                  },
+                  {
+                    "feature": "blue",
+                    "value": 0.0027183507772149066
                   }
                 ],
-                "text": "The model predicts class 3 as the most likely outcome. The most influential features that pushed the prediction towards class 3 are ram (+0.4905), battery_power (+0.0944), and px_width (+0.0671). These features collectively contributed positively, strongly supporting the prediction for class 3.\n\nFor class 2, although the negative contributions from ram (-0.1256), battery_power (-0.0698), and px_width (-0.0492) were present, they were not sufficient to outweigh the positive influences seen in class 3. Similarly, for class 1, the negative impact of ram (-0.1918) and other features like n_cores (-0.0153) and int_memory (-0.0122) further reduced its likelihood compared to class 3. In class 0, the negative contributions from ram (-0.1731), battery_power (-0.0227), and px_width (-0.0163) also did not favor a prediction towards this class.\n\nOverall, the strong positive influence of ram, battery_power, and px_width for class 3 made it the most compelling choice for the model's prediction."
+                "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.1884) and px_width (+0.0420). Although battery_power contributed negatively (-0.0599), its impact was outweighed by the strong positive effects of ram and px_width.\n\nFor class 3, while battery_power showed a positive influence (+0.0890), it wasn't enough to overcome the stronger impact of ram favoring class 2. Additionally, px_width contributed negatively (-0.0597) for class 3, which further diminished its likelihood compared to class 2.\n\nIn contrast, class 1 had a slight positive contribution from talk_time (+0.0233), but this was not sufficient to offset the negative influence of ram (-0.1411) when compared to the strong positive ram influence for class 2. Thus, the model confidently predicts class 2 as the most probable outcome."
               }
             }
           },
           {
             "id": 3,
             "features": {
-              "ram": 0.5471253896961155,
-              "battery_power": 0.08146776051887551,
-              "px_width": -0.05291299614677738,
-              "pc": 0.01691306859337856,
-              "touch_screen": 0.011576949306859052,
-              "n_cores": -0.01001647939515645,
-              "px_height": -0.009591667436386338,
-              "four_g": 0.008745619627022104,
-              "int_memory": 0.008554894540012894,
-              "sc_h": -0.007816977696883031,
-              "mobile_wt": -0.006619582661361773,
-              "dual_sim": 0.006313178177296646,
-              "clock_speed": -0.006055197748788165,
-              "sc_w": 0.004060117735764262,
-              "blue": -0.0026097535557942334,
-              "m_dep": -0.0018424574279036425,
-              "fc": 0.0014363964074362535,
-              "three_g": -0.0011293811428253247,
-              "wifi": -0.0007797828344744257,
-              "talk_time": -0.0003391047324390172
+              "battery_power": 1799.0,
+              "blue": 1.0,
+              "clock_speed": 0.5,
+              "dual_sim": 0.0,
+              "fc": 0.0,
+              "four_g": 0.0,
+              "int_memory": 49.0,
+              "m_dep": 0.4,
+              "mobile_wt": 107.0,
+              "n_cores": 4.0,
+              "pc": 2.0,
+              "px_height": 632.0,
+              "px_width": 1383.0,
+              "ram": 720.0,
+              "sc_h": 12.0,
+              "sc_w": 2.0,
+              "talk_time": 11.0,
+              "three_g": 1.0,
+              "touch_screen": 1.0,
+              "wifi": 1.0
             },
-            "ground_truth": "3",
-            "model_prediction": "3",
-            "confidence": 0.8528878523309744,
+            "ground_truth": "0",
+            "model_prediction": "0",
+            "confidence": 0.659979760522691,
             "explanations": {
               "Xemble": {
                 "votes": [
                   {
                     "model": "rf",
-                    "vote": "3"
+                    "vote": "0"
                   },
                   {
                     "model": "gb",
-                    "vote": "3"
+                    "vote": "0"
                   },
                   {
                     "model": "gb2",
-                    "vote": "3"
+                    "vote": "0"
                   },
                   {
                     "model": "gb3",
@@ -356,107 +508,107 @@
                   },
                   {
                     "model": "svc",
-                    "vote": "3"
+                    "vote": "1"
                   },
                   {
                     "model": "lr",
-                    "vote": "3"
+                    "vote": "1"
                   },
                   {
                     "model": "ada",
-                    "vote": "3"
+                    "vote": "0"
                   },
                   {
                     "model": "mlp",
-                    "vote": "3"
+                    "vote": "1"
                   }
                 ],
-                "text": "The ensemble AI predicts a value of \"3\" with an overall confidence level of 85.3%. All models unanimously agree on this prediction, indicating a high level of reliability. This consensus across diverse models, each with strong performance metrics, enhances trust in the prediction's accuracy and practical applicability."
+                "text": "1. The ensemble AI predicts a \"0\" outcome with an overall confidence level of 66.0%, suggesting a moderate level of certainty in this prediction.  \n2. The models show an agreement level of 58.5%, indicating that more than half of the models are aligned with this prediction, but there is some variance in their individual outputs.  \n3. The reliability of this prediction is strengthened by the high performance and confidence of key models like Random Forest and Gradient Boosting, which both support the predicted outcome."
               },
               "SHAP": {
                 "shap_values": [
                   {
                     "feature": "ram",
-                    "value": 0.5471253896961155
+                    "value": 0.43427424537674103
                   },
                   {
                     "feature": "battery_power",
-                    "value": 0.08146776051887551
+                    "value": -0.07829001180736435
                   },
                   {
                     "feature": "px_width",
-                    "value": -0.05291299614677738
-                  },
-                  {
-                    "feature": "pc",
-                    "value": 0.01691306859337856
-                  },
-                  {
-                    "feature": "touch_screen",
-                    "value": 0.011576949306859052
-                  },
-                  {
-                    "feature": "n_cores",
-                    "value": -0.01001647939515645
+                    "value": 0.02111231686817532
                   },
                   {
                     "feature": "px_height",
-                    "value": -0.009591667436386338
-                  },
-                  {
-                    "feature": "four_g",
-                    "value": 0.008745619627022104
-                  },
-                  {
-                    "feature": "int_memory",
-                    "value": 0.008554894540012894
-                  },
-                  {
-                    "feature": "sc_h",
-                    "value": -0.007816977696883031
-                  },
-                  {
-                    "feature": "mobile_wt",
-                    "value": -0.006619582661361773
-                  },
-                  {
-                    "feature": "dual_sim",
-                    "value": 0.006313178177296646
-                  },
-                  {
-                    "feature": "clock_speed",
-                    "value": -0.006055197748788165
-                  },
-                  {
-                    "feature": "sc_w",
-                    "value": 0.004060117735764262
-                  },
-                  {
-                    "feature": "blue",
-                    "value": -0.0026097535557942334
-                  },
-                  {
-                    "feature": "m_dep",
-                    "value": -0.0018424574279036425
-                  },
-                  {
-                    "feature": "fc",
-                    "value": 0.0014363964074362535
-                  },
-                  {
-                    "feature": "three_g",
-                    "value": -0.0011293811428253247
+                    "value": 0.020839841732728463
                   },
                   {
                     "feature": "wifi",
-                    "value": -0.0007797828344744257
+                    "value": 0.015861120359138923
+                  },
+                  {
+                    "feature": "mobile_wt",
+                    "value": -0.010883074532476198
+                  },
+                  {
+                    "feature": "touch_screen",
+                    "value": -0.00947276419633768
                   },
                   {
                     "feature": "talk_time",
-                    "value": -0.0003391047324390172
+                    "value": 0.005426574344557009
+                  },
+                  {
+                    "feature": "m_dep",
+                    "value": 0.005301634220493359
+                  },
+                  {
+                    "feature": "clock_speed",
+                    "value": -0.0052503928257173925
+                  },
+                  {
+                    "feature": "pc",
+                    "value": -0.0047466401801980525
+                  },
+                  {
+                    "feature": "sc_w",
+                    "value": -0.003891103164100726
+                  },
+                  {
+                    "feature": "three_g",
+                    "value": 0.003014357745882992
+                  },
+                  {
+                    "feature": "four_g",
+                    "value": -0.002681434428290608
+                  },
+                  {
+                    "feature": "blue",
+                    "value": 0.0023031128155555076
+                  },
+                  {
+                    "feature": "dual_sim",
+                    "value": -0.0021454942721351126
+                  },
+                  {
+                    "feature": "fc",
+                    "value": 0.001900066830174095
+                  },
+                  {
+                    "feature": "int_memory",
+                    "value": -0.001443021879901333
+                  },
+                  {
+                    "feature": "sc_h",
+                    "value": 0.001378117260815975
+                  },
+                  {
+                    "feature": "n_cores",
+                    "value": 0.00036439968358779727
                   }
                 ],
-                "text": "The model predicts class 3 as the most likely outcome. The most influential features that pushed the prediction towards class 3 are ram (+0.5471) and battery_power (+0.0815). Although px_width contributed negatively (-0.0529), its impact was outweighed by the strong positive effects of ram and battery_power.\n\nFor class 2, px_width showed a positive influence (+0.0368), but it wasn't enough to overcome the strong impact of ram favoring class 3. Additionally, battery_power contributed negatively (-0.0631) for class 2, further reducing its likelihood.\n\nIn comparison, class 0 had a slight positive contribution from px_width (+0.0249), but this was overshadowed by the negative influence of ram (-0.2487), making class 3 a more compelling choice. The model's decision is clearly driven by the significant positive impact of ram and battery_power, which strongly support the prediction of class 3."
+                "text": "The model predicts class 0 as the most likely outcome. The most influential feature that pushed the prediction towards class 0 is ram, with a significant positive contribution of +0.4343. Although battery_power had a slight negative impact of -0.0783, its effect was outweighed by the strong positive influence of ram.\n\nWhen considering class 1, battery_power showed a positive influence of +0.0440, but this was not enough to surpass the substantial impact of ram favoring class 0. Additionally, for class 3, battery_power had a positive contribution of +0.0514, yet it was overshadowed by the negative influence of ram (-0.2531) for that class. These comparisons highlight why class 0 emerged as the most probable prediction, driven primarily by the strong positive effect of ram."
               }
             }
           }
