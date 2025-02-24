@@ -67,7 +67,7 @@
                     "vote": "2"
                   }
                 ],
-                "text": "The ensemble AI predicts the outcome as \"2\" with an overall confidence level of 74.3%.\n\n2. The models show a high agreement level of 90%, indicating strong consensus among the different algorithms.\n\n3. This prediction is reliable because seven out of eight models, including the most accurate ones, agree on the same outcome, demonstrating a robust and consistent consensus."
+                "text": "The ensemble AI predicts the outcome as \"2\" with an overall confidence level of 74.3%. The models show a high agreement level of 90%, indicating strong consensus among the different algorithms. This prediction is reliable because seven out of eight models, including the most accurate ones, agree on the same outcome, demonstrating a robust and consistent consensus."
               },
               "SHAP": {
                 "shap_values": [
@@ -219,7 +219,7 @@
                     "vote": "3"
                   }
                 ],
-                "text": "The ensemble AI predicts a category \"3\" with an overall confidence level of 91.9%.\n\n2. All models unanimously agree on this prediction, indicating a high level of reliability.\n\n3. The strong consensus across diverse models, each with high individual performance, reinforces the trustworthiness of this prediction, akin to a jury unanimously reaching the same verdict."
+                "text": "The ensemble AI predicts a category \"3\" with an overall confidence level of 91.9%. All models unanimously agree on this prediction, indicating a high level of reliability. The strong consensus across diverse models, each with high individual performance, reinforces the trustworthiness of this prediction, akin to a jury unanimously reaching the same verdict."
               },
               "SHAP": {
                 "shap_values": [
