@@ -647,12 +647,6 @@
         "options": ["Not satisfied at all", "Very unsatisfied", "Somewhat unsatisfied", "Slightly unsatisfied", "Moderately satisfied", "Reasonably satisfied", "Very satisfied", "Almost extremely satisfied", "Extremely satisfied"]
       },
       {
-        "id": "Usefulness_rating",
-        "text": "On a scale from 1 (Not useful at all) to 9 (Extremely useful), how useful was the explanation for understanding the ensemble's decision?",
-        "type": "likert",
-        "options": ["Not useful at all", "Very useless", "Somewhat useless", "Slightly useless", "Moderately useful", "Reasonably useful", "Very useful", "Almost extremely useful", "Extremely useful"]
-      },
-      {
         "id": "accuracy_rating",
         "text": "On a scale from 1 (Very inaccurate) to 9 (Highly accurate), how accurate do you believe the ensemble's prediction was based on the explanation?",
         "type": "likert",
