@@ -676,5 +676,27 @@
         "type": "likert",
         "options" : ["Not relevant at all", "Very irrelevant", "Somewhat irrelevant", "Slightly irrelevant", "Moderately relevant", "Reasonably relevant", "Very relevant", "Almost extremely relevant", "Highly relevant"]
       }
+    ],
+    "summarizingQuestions":[
+      {
+        "id": "clarity_open",
+        "text": "What aspects of the explanation were unclear or confusing?",
+        "type": "textarea"
+      },
+      {
+        "id": "trust_open",
+        "text": "Did any part of the explanation increase or decrease your trust in the ensemble’s decision? If so, which part and why?",
+        "type": "textarea"
+      },
+      {
+        "id": "confidence_info",
+        "text": "What additional information would increase your confidence in the ensemble’s output?",
+        "type": "textarea"
+      },
+      {
+        "id": "relevance_open",
+        "text": "Were there any justifications that seemed unnecessary or missing?",
+        "type": "textarea"
+      }
     ]
   }
