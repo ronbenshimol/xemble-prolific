@@ -677,7 +677,7 @@
         "options" : ["Not relevant at all", "Very irrelevant", "Somewhat irrelevant", "Slightly irrelevant", "Moderately relevant", "Reasonably relevant", "Very relevant", "Almost extremely relevant", "Highly relevant"]
       }
     ],
-    "summarizingQuestions":[
+    "reviewQuestions":[
       {
         "id": "clarity_open",
         "text": "What aspects of the explanation were unclear or confusing?",
