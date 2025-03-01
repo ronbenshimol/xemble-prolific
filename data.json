@@ -1,696 +1,612 @@
 {
-    "datasets": [
-      {
-        "name": "Mobile Phone Prices",
-        "complexity": "Medium",
-        "samples": [
-          {
-            "id": 0,
-            "features": {
-              "battery_power": 826.0,
-              "blue": 0.0,
-              "clock_speed": 0.6,
-              "dual_sim": 0.0,
-              "fc": 3.0,
-              "four_g": 0.0,
-              "int_memory": 62.0,
-              "m_dep": 0.7,
-              "mobile_wt": 187.0,
-              "n_cores": 4.0,
-              "pc": 19.0,
-              "px_height": 778.0,
-              "px_width": 1615.0,
-              "ram": 1998.0,
-              "sc_h": 17.0,
-              "sc_w": 4.0,
-              "talk_time": 17.0,
-              "three_g": 0.0,
-              "touch_screen": 0.0,
-              "wifi": 0.0
-            },
-            "ground_truth": "2",
-            "model_prediction": "2",
-            "confidence": 0.4934421341992732,
-            "explanations": {
-              "Xemble": {
-                "votes": [
-                  {
-                    "model": "rf",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb",
-                    "vote": "1"
-                  },
-                  {
-                    "model": "gb2",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb3",
-                    "vote": "3"
-                  },
-                  {
-                    "model": "svc",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "lr",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "ada",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "mlp",
-                    "vote": "0"
-                  }
-                ],
-                "text": "The ensemble AI predicts a category \"2\" with an overall confidence level of 49.3%.  \nThere is a 71.7% agreement among the models, indicating a moderate level of consensus.  \nThe reliability of this prediction is supported by the fact that the majority of models, including high-performing ones like Random Forest and Support Vector Classifier, agree on the outcome."
-              },
-              "SHAP": {
-                "shap_values": [
-                  {
-                    "feature": "ram",
-                    "value": 0.07908604095500774
-                  },
-                  {
-                    "feature": "int_memory",
-                    "value": 0.0369273030512447
-                  },
-                  {
-                    "feature": "touch_screen",
-                    "value": 0.02323681182918239
-                  },
-                  {
-                    "feature": "three_g",
-                    "value": -0.018848810682223
-                  },
-                  {
-                    "feature": "talk_time",
-                    "value": -0.0165704046901249
-                  },
-                  {
-                    "feature": "mobile_wt",
-                    "value": 0.011658566732446855
-                  },
-                  {
-                    "feature": "clock_speed",
-                    "value": 0.01152735309001384
-                  },
-                  {
-                    "feature": "sc_h",
-                    "value": 0.008927774412147782
-                  },
-                  {
-                    "feature": "four_g",
-                    "value": 0.008461168965099405
-                  },
-                  {
-                    "feature": "battery_power",
-                    "value": -0.007531417961026777
-                  },
-                  {
-                    "feature": "pc",
-                    "value": -0.006052773624824922
-                  },
-                  {
-                    "feature": "sc_w",
-                    "value": 0.005801119983272758
-                  },
-                  {
-                    "feature": "m_dep",
-                    "value": 0.003483448185805853
-                  },
-                  {
-                    "feature": "blue",
-                    "value": 0.00331970771552012
-                  },
-                  {
-                    "feature": "n_cores",
-                    "value": 0.002977707462195006
-                  },
-                  {
-                    "feature": "px_height",
-                    "value": 0.0026922425689522534
-                  },
-                  {
-                    "feature": "px_width",
-                    "value": 0.002591747116892207
-                  },
-                  {
-                    "feature": "wifi",
-                    "value": -0.0014969912893633107
-                  },
-                  {
-                    "feature": "dual_sim",
-                    "value": -0.00034664344875912816
-                  },
-                  {
-                    "feature": "fc",
-                    "value": 0.0001411088570160224
-                  }
-                ],
-                "text": "The model predicts class 2 as the most likely outcome. The most influential features supporting this prediction are ram (+0.0791) and int_memory (+0.0369), which both contributed positively to the likelihood of class 2. Additionally, the presence of a touch_screen (+0.0232) further supported this prediction, albeit to a lesser extent.\n\nWhen considering class 1 as an alternative, ram also had a positive influence (+0.1994), and talk_time contributed positively (+0.0322). However, the negative impact of int_memory (-0.0359) reduced its overall likelihood compared to class 2. For class 0, battery_power had a slight positive influence (+0.0318), but the negative contribution from ram (-0.1372) made it less favorable. \n\nUltimately, the positive contributions of ram, int_memory, and touch_screen for class 2 outweighed the influences for other classes, leading to the model's prediction."
-              }
-            }
+  "datasets": [
+    {
+      "name": "Mobile Phone Prices",
+      "complexity": "Medium",
+      "samples": [
+        {
+          "id": 0,
+          "features": {
+            "battery_power": 1656.0,
+            "blue": 1.0,
+            "clock_speed": 1.6,
+            "dual_sim": 1.0,
+            "fc": 0.0,
+            "four_g": 0.0,
+            "int_memory": 16.0,
+            "m_dep": 1.0,
+            "mobile_wt": 117.0,
+            "n_cores": 7.0,
+            "pc": 2.0,
+            "px_height": 320.0,
+            "px_width": 899.0,
+            "ram": 2856.0,
+            "sc_h": 14.0,
+            "sc_w": 3.0,
+            "talk_time": 20.0,
+            "three_g": 1.0,
+            "touch_screen": 1.0,
+            "wifi": 1.0
           },
-          {
-            "id": 1,
-            "features": {
-              "battery_power": 1213.0,
-              "blue": 1.0,
-              "clock_speed": 0.5,
-              "dual_sim": 0.0,
-              "fc": 0.0,
-              "four_g": 0.0,
-              "int_memory": 16.0,
-              "m_dep": 0.5,
-              "mobile_wt": 108.0,
-              "n_cores": 5.0,
-              "pc": 0.0,
-              "px_height": 226.0,
-              "px_width": 1248.0,
-              "ram": 2700.0,
-              "sc_h": 12.0,
-              "sc_w": 3.0,
-              "talk_time": 9.0,
-              "three_g": 0.0,
-              "touch_screen": 0.0,
-              "wifi": 1.0
+          "ground_truth": "2",
+          "model_prediction": "2",
+          "confidence": 0.6038604023233917,
+          "explanations": {
+            "Xemble": {
+              "votes": [
+                {
+                  "model": "rf",
+                  "vote": "2"
+                },
+                {
+                  "model": "gb",
+                  "vote": "2"
+                },
+                {
+                  "model": "gb2",
+                  "vote": "2"
+                },
+                {
+                  "model": "gb3",
+                  "vote": "3"
+                },
+                {
+                  "model": "svc",
+                  "vote": "2"
+                },
+                {
+                  "model": "lr",
+                  "vote": "2"
+                },
+                {
+                  "model": "ada",
+                  "vote": "3"
+                },
+                {
+                  "model": "mlp",
+                  "vote": "3"
+                }
+              ],
+              "model_accuracies": [
+                {
+                  "model": "RF",
+                  "accuracy": 0.9925
+                },
+                {
+                  "model": "GB",
+                  "accuracy": 1.0
+                },
+                {
+                  "model": "GB2",
+                  "accuracy": 0.925
+                },
+                {
+                  "model": "GB3",
+                  "accuracy": 0.275
+                },
+                {
+                  "model": "SVC",
+                  "accuracy": 0.9675
+                },
+                {
+                  "model": "LR",
+                  "accuracy": 0.86
+                },
+                {
+                  "model": "ADA",
+                  "accuracy": 0.7525
+                },
+                {
+                  "model": "MLP",
+                  "accuracy": 0.4975
+                }
+              ],
+              "model_confidences": [
+                {
+                  "model": "rf",
+                  "confidence": 0.6
+                },
+                {
+                  "model": "gb",
+                  "confidence": 0.6631216365172057
+                },
+                {
+                  "model": "gb2",
+                  "confidence": 0.5083916418734806
+                },
+                {
+                  "model": "gb3",
+                  "confidence": 0.27343418210829085
+                },
+                {
+                  "model": "svc",
+                  "confidence": 0.8629010770277554
+                },
+                {
+                  "model": "lr",
+                  "confidence": 0.5005554166392857
+                },
+                {
+                  "model": "ada",
+                  "confidence": 0.7734393163327438
+                },
+                {
+                  "model": "mlp",
+                  "confidence": 0.27091232434810386
+                }
+              ],
+              "text": "1. The ensemble AI predicts a category \"2\" with an overall confidence level of 60.4%.\n\n2. There is a 75.7% agreement among the models, indicating a strong consensus towards this prediction.\n\n3. This prediction is reliable because the majority of high-performing models, such as Random Forest and Support Vector Classifier, agree on this outcome, providing a solid foundation for decision-making."
             },
-            "ground_truth": "2",
-            "model_prediction": "2",
-            "confidence": 0.7155808280892927,
-            "explanations": {
-              "Xemble": {
-                "votes": [
-                  {
-                    "model": "rf",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb2",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb3",
-                    "vote": "3"
-                  },
-                  {
-                    "model": "svc",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "lr",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "ada",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "mlp",
-                    "vote": "3"
-                  }
-                ],
-                "text": "1. The ensemble AI predicts a category \"2\" with a confidence level of 71.6%.  \n2. An agreement level of 87.7% among the models indicates strong consensus, enhancing the prediction's reliability.  \n3. This prediction is trustworthy as six out of eight models, including the top performers, agree on the outcome, supporting a robust decision-making process."
-              },
-              "SHAP": {
-                "shap_values": [
-                  {
-                    "feature": "ram",
-                    "value": 0.28023639049985993
-                  },
-                  {
-                    "feature": "battery_power",
-                    "value": 0.043736770279776654
-                  },
-                  {
-                    "feature": "px_height",
-                    "value": 0.0300450572681565
-                  },
-                  {
-                    "feature": "px_width",
-                    "value": 0.020863129520546378
-                  },
-                  {
-                    "feature": "three_g",
-                    "value": -0.019699600281131217
-                  },
-                  {
-                    "feature": "pc",
-                    "value": 0.019188481016811053
-                  },
-                  {
-                    "feature": "touch_screen",
-                    "value": 0.01865558684475723
-                  },
-                  {
-                    "feature": "int_memory",
-                    "value": -0.013604927156168897
-                  },
-                  {
-                    "feature": "four_g",
-                    "value": 0.012908613672082151
-                  },
-                  {
-                    "feature": "n_cores",
-                    "value": 0.009317339935210433
-                  },
-                  {
-                    "feature": "fc",
-                    "value": 0.00821698888430697
-                  },
-                  {
-                    "feature": "talk_time",
-                    "value": 0.00802102099925366
-                  },
-                  {
-                    "feature": "sc_w",
-                    "value": 0.004539604397326608
-                  },
-                  {
-                    "feature": "m_dep",
-                    "value": 0.004225226239874026
-                  },
-                  {
-                    "feature": "sc_h",
-                    "value": 0.004079684044134018
-                  },
-                  {
-                    "feature": "mobile_wt",
-                    "value": -0.002806466147391444
-                  },
-                  {
-                    "feature": "blue",
-                    "value": -0.0027267355633672696
-                  },
-                  {
-                    "feature": "wifi",
-                    "value": 0.0026090370406095303
-                  },
-                  {
-                    "feature": "clock_speed",
-                    "value": 0.002134150993013757
-                  },
-                  {
-                    "feature": "dual_sim",
-                    "value": -0.0004998103253281599
-                  }
-                ],
-                "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.2802), battery_power (+0.0437), and px_height (+0.0300). These features collectively provided a strong positive influence, significantly outweighing any negative contributions.\n\nWhen comparing with class 0, although battery_power had a slight positive influence (+0.0120), it was not enough to counterbalance the negative impact of ram (-0.1839) and pc (-0.0069), which leaned away from class 0. Similarly, for class 1, three_g had a minor positive effect (+0.0164), but the negative influence of ram (-0.0965) and touch_screen (-0.0161) did not support class 1 as strongly as the features did for class 2.\n\nIn contrast, class 3 was not a strong contender due to the negative contributions from battery_power (-0.0475), px_height (-0.0273), and px_width (-0.0228), which did not favor class 3. Overall, the positive influences for class 2 were compelling enough to make it the predicted outcome."
-              }
-            }
-          },
-          {
-            "id": 2,
-            "features": {
-              "battery_power": 1656.0,
-              "blue": 1.0,
-              "clock_speed": 1.6,
-              "dual_sim": 1.0,
-              "fc": 0.0,
-              "four_g": 0.0,
-              "int_memory": 16.0,
-              "m_dep": 1.0,
-              "mobile_wt": 117.0,
-              "n_cores": 7.0,
-              "pc": 2.0,
-              "px_height": 320.0,
-              "px_width": 899.0,
-              "ram": 2856.0,
-              "sc_h": 14.0,
-              "sc_w": 3.0,
-              "talk_time": 20.0,
-              "three_g": 1.0,
-              "touch_screen": 1.0,
-              "wifi": 1.0
-            },
-            "ground_truth": "2",
-            "model_prediction": "2",
-            "confidence": 0.6038604023233917,
-            "explanations": {
-              "Xemble": {
-                "votes": [
-                  {
-                    "model": "rf",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb2",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "gb3",
-                    "vote": "3"
-                  },
-                  {
-                    "model": "svc",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "lr",
-                    "vote": "2"
-                  },
-                  {
-                    "model": "ada",
-                    "vote": "3"
-                  },
-                  {
-                    "model": "mlp",
-                    "vote": "3"
-                  }
-                ],
-                "text": "1. The ensemble AI predicts a category \"2\" with an overall confidence level of 60.4%.\n\n2. There is a 75.7% agreement among the models, indicating a strong consensus towards this prediction.\n\n3. This prediction is reliable because the majority of high-performing models, such as Random Forest and Support Vector Classifier, agree on this outcome, providing a solid foundation for decision-making."
-              },
-              "SHAP": {
-                "shap_values": [
-                  {
-                    "feature": "ram",
-                    "value": 0.18836130235922366
-                  },
-                  {
-                    "feature": "battery_power",
-                    "value": -0.05985509740299197
-                  },
-                  {
-                    "feature": "px_width",
-                    "value": 0.041963010622414094
-                  },
-                  {
-                    "feature": "pc",
-                    "value": 0.02461378754812086
-                  },
-                  {
-                    "feature": "m_dep",
-                    "value": 0.02063070067025698
-                  },
-                  {
-                    "feature": "int_memory",
-                    "value": -0.01531684947458503
-                  },
-                  {
-                    "feature": "n_cores",
-                    "value": 0.015297872407837754
-                  },
-                  {
-                    "feature": "px_height",
-                    "value": 0.012312810189824495
-                  },
-                  {
-                    "feature": "touch_screen",
-                    "value": -0.011721238906308764
-                  },
-                  {
-                    "feature": "sc_h",
-                    "value": 0.010994978560481077
-                  },
-                  {
-                    "feature": "four_g",
-                    "value": 0.010735631788041454
-                  },
-                  {
-                    "feature": "dual_sim",
-                    "value": 0.0092236163279078
-                  },
-                  {
-                    "feature": "wifi",
-                    "value": 0.007511798602731807
-                  },
-                  {
-                    "feature": "three_g",
-                    "value": 0.007166426370420977
-                  },
-                  {
-                    "feature": "talk_time",
-                    "value": -0.00668779719185873
-                  },
-                  {
-                    "feature": "clock_speed",
-                    "value": 0.004794273764963359
-                  },
-                  {
-                    "feature": "fc",
-                    "value": 0.003440055370016743
-                  },
-                  {
-                    "feature": "mobile_wt",
-                    "value": 0.0033263923162204167
-                  },
-                  {
-                    "feature": "sc_w",
-                    "value": 0.0027711508841479224
-                  },
-                  {
-                    "feature": "blue",
-                    "value": 0.0027183507772149066
-                  }
-                ],
-                "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.1884) and px_width (+0.0420). Although battery_power contributed negatively (-0.0599), its impact was outweighed by the strong positive effects of ram and px_width.\n\nFor class 3, while battery_power showed a positive influence (+0.0890), it wasn't enough to overcome the stronger impact of ram favoring class 2. Additionally, px_width contributed negatively (-0.0597) for class 3, which further diminished its likelihood compared to class 2.\n\nIn contrast, class 1 had a slight positive contribution from talk_time (+0.0233), but this was not sufficient to offset the negative influence of ram (-0.1411) when compared to the strong positive ram influence for class 2. Thus, the model confidently predicts class 2 as the most probable outcome."
-              }
-            }
-          },
-          {
-            "id": 3,
-            "features": {
-              "battery_power": 1799.0,
-              "blue": 1.0,
-              "clock_speed": 0.5,
-              "dual_sim": 0.0,
-              "fc": 0.0,
-              "four_g": 0.0,
-              "int_memory": 49.0,
-              "m_dep": 0.4,
-              "mobile_wt": 107.0,
-              "n_cores": 4.0,
-              "pc": 2.0,
-              "px_height": 632.0,
-              "px_width": 1383.0,
-              "ram": 720.0,
-              "sc_h": 12.0,
-              "sc_w": 2.0,
-              "talk_time": 11.0,
-              "three_g": 1.0,
-              "touch_screen": 1.0,
-              "wifi": 1.0
-            },
-            "ground_truth": "0",
-            "model_prediction": "0",
-            "confidence": 0.659979760522691,
-            "explanations": {
-              "Xemble": {
-                "votes": [
-                  {
-                    "model": "rf",
-                    "vote": "0"
-                  },
-                  {
-                    "model": "gb",
-                    "vote": "0"
-                  },
-                  {
-                    "model": "gb2",
-                    "vote": "0"
-                  },
-                  {
-                    "model": "gb3",
-                    "vote": "3"
-                  },
-                  {
-                    "model": "svc",
-                    "vote": "1"
-                  },
-                  {
-                    "model": "lr",
-                    "vote": "1"
-                  },
-                  {
-                    "model": "ada",
-                    "vote": "0"
-                  },
-                  {
-                    "model": "mlp",
-                    "vote": "1"
-                  }
-                ],
-                "text": "1. The ensemble AI predicts a \"0\" outcome with an overall confidence level of 66.0%, suggesting a moderate level of certainty in this prediction.  \n2. The models show an agreement level of 58.5%, indicating that more than half of the models are aligned with this prediction, but there is some variance in their individual outputs.  \n3. The reliability of this prediction is strengthened by the high performance and confidence of key models like Random Forest and Gradient Boosting, which both support the predicted outcome."
-              },
-              "SHAP": {
-                "shap_values": [
-                  {
-                    "feature": "ram",
-                    "value": 0.43427424537674103
-                  },
-                  {
-                    "feature": "battery_power",
-                    "value": -0.07829001180736435
-                  },
-                  {
-                    "feature": "px_width",
-                    "value": 0.02111231686817532
-                  },
-                  {
-                    "feature": "px_height",
-                    "value": 0.020839841732728463
-                  },
-                  {
-                    "feature": "wifi",
-                    "value": 0.015861120359138923
-                  },
-                  {
-                    "feature": "mobile_wt",
-                    "value": -0.010883074532476198
-                  },
-                  {
-                    "feature": "touch_screen",
-                    "value": -0.00947276419633768
-                  },
-                  {
-                    "feature": "talk_time",
-                    "value": 0.005426574344557009
-                  },
-                  {
-                    "feature": "m_dep",
-                    "value": 0.005301634220493359
-                  },
-                  {
-                    "feature": "clock_speed",
-                    "value": -0.0052503928257173925
-                  },
-                  {
-                    "feature": "pc",
-                    "value": -0.0047466401801980525
-                  },
-                  {
-                    "feature": "sc_w",
-                    "value": -0.003891103164100726
-                  },
-                  {
-                    "feature": "three_g",
-                    "value": 0.003014357745882992
-                  },
-                  {
-                    "feature": "four_g",
-                    "value": -0.002681434428290608
-                  },
-                  {
-                    "feature": "blue",
-                    "value": 0.0023031128155555076
-                  },
-                  {
-                    "feature": "dual_sim",
-                    "value": -0.0021454942721351126
-                  },
-                  {
-                    "feature": "fc",
-                    "value": 0.001900066830174095
-                  },
-                  {
-                    "feature": "int_memory",
-                    "value": -0.001443021879901333
-                  },
-                  {
-                    "feature": "sc_h",
-                    "value": 0.001378117260815975
-                  },
-                  {
-                    "feature": "n_cores",
-                    "value": 0.00036439968358779727
-                  }
-                ],
-                "text": "The model predicts class 0 as the most likely outcome. The most influential feature that pushed the prediction towards class 0 is ram, with a significant positive contribution of +0.4343. Although battery_power had a slight negative impact of -0.0783, its effect was outweighed by the strong positive influence of ram.\n\nWhen considering class 1, battery_power showed a positive influence of +0.0440, but this was not enough to surpass the substantial impact of ram favoring class 0. Additionally, for class 3, battery_power had a positive contribution of +0.0514, yet it was overshadowed by the negative influence of ram (-0.2531) for that class. These comparisons highlight why class 0 emerged as the most probable prediction, driven primarily by the strong positive effect of ram."
-              }
+            "SHAP": {
+              "shap_values": [
+                {
+                  "feature": "ram",
+                  "value": 0.18836130235922366
+                },
+                {
+                  "feature": "battery_power",
+                  "value": -0.05985509740299197
+                },
+                {
+                  "feature": "px_width",
+                  "value": 0.041963010622414094
+                },
+                {
+                  "feature": "pc",
+                  "value": 0.02461378754812086
+                },
+                {
+                  "feature": "m_dep",
+                  "value": 0.02063070067025698
+                },
+                {
+                  "feature": "int_memory",
+                  "value": -0.01531684947458503
+                },
+                {
+                  "feature": "n_cores",
+                  "value": 0.015297872407837754
+                },
+                {
+                  "feature": "px_height",
+                  "value": 0.012312810189824495
+                },
+                {
+                  "feature": "touch_screen",
+                  "value": -0.011721238906308764
+                },
+                {
+                  "feature": "sc_h",
+                  "value": 0.010994978560481077
+                },
+                {
+                  "feature": "four_g",
+                  "value": 0.010735631788041454
+                },
+                {
+                  "feature": "dual_sim",
+                  "value": 0.0092236163279078
+                },
+                {
+                  "feature": "wifi",
+                  "value": 0.007511798602731807
+                },
+                {
+                  "feature": "three_g",
+                  "value": 0.007166426370420977
+                },
+                {
+                  "feature": "talk_time",
+                  "value": -0.00668779719185873
+                },
+                {
+                  "feature": "clock_speed",
+                  "value": 0.004794273764963359
+                },
+                {
+                  "feature": "fc",
+                  "value": 0.003440055370016743
+                },
+                {
+                  "feature": "mobile_wt",
+                  "value": 0.0033263923162204167
+                },
+                {
+                  "feature": "sc_w",
+                  "value": 0.0027711508841479224
+                },
+                {
+                  "feature": "blue",
+                  "value": 0.0027183507772149066
+                }
+              ],
+              "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.1884) and px_width (+0.0420). Although battery_power contributed negatively (-0.0599), its impact was outweighed by the strong positive effects of ram and px_width.\n\nFor class 3, while battery_power showed a positive influence (+0.0890), it wasn't enough to overcome the stronger impact of ram favoring class 2. Additionally, px_width contributed negatively (-0.0597) for class 3, which further diminished its likelihood compared to class 2.\n\nIn contrast, class 1 had a slight positive contribution from talk_time (+0.0233), but this was not sufficient to offset the negative influence of ram (-0.1411) when compared to the strong positive ram influence for class 2. Thus, the model confidently predicts class 2 as the most probable outcome."
             }
           }
-        ]
-      }
-    ],
-    "questions": [
-      {
-        "id": "clarity_rating",
-        "text": "On a scale from 1 (Not clear at all) to 9 (Extremely clear), how clearly did the explanation communicate how the ensemble reached its decision?",
-        "type": "likert",
-        "options": ["Not clear at all", "Very unclear", "Somewhat unclear", "Slightly unclear", "Moderately clear", "Reasonably clear", "Very clear", "Almost extremely clear", "Extremely clear"]
-      },
-      {
-        "id": "trust_rating",
-        "text": "On a scale from 1 (Do not trust at all) to 9 (Fully trust), to what extent do you trust the explanation provided?",
-        "type": "likert",
-        "options": ["Do not trust at all", "Highly distrust", "Moderately distrust", "Slightly distrust", "Neutral (Neither trust nor distrust)", "Slightly trust", "Moderately trust", "Highly trust", "Fully trust"]
-      },
-      {
-        "id": "comprehensibility_rating",
-        "text": "On a scale from 1 (Very difficult) to 9 (Very easy), how easy was it to understand the explanation?",
-        "type": "likert",
-        "options": ["Very difficult", "Difficult", "Slightly difficult", "Moderately difficult", "Neutral (Neither easy nor difficult)", "Slightly easy", "Moderately easy", "Easy", "Very easy"]
-      },
-      {
-        "id": "comprehensibility_detail",
-        "text": "Did the explanation contain too much technical detail, too little, or was it balanced?",
-        "type": "multiple",
-        "options": ["Too much", "Too little", "Balanced"]
-      },
-      {
-        "id": "satisfaction_rating",
-        "text": "On a scale from 1 (Not satisfied at all) to 9 (Extremely satisfied), how satisfied are you with the explanation provided?",
-        "type": "likert",
-        "options": ["Not satisfied at all", "Very unsatisfied", "Somewhat unsatisfied", "Slightly unsatisfied", "Moderately satisfied", "Reasonably satisfied", "Very satisfied", "Almost extremely satisfied", "Extremely satisfied"]
-      },
-      {
-        "id": "accuracy_rating",
-        "text": "On a scale from 1 (Very inaccurate) to 9 (Highly accurate), how accurate do you believe the ensemble's prediction was based on the explanation?",
-        "type": "likert",
-        "options": ["Very inaccurate", "Inaccurate", "Slightly inaccurate", "Moderately inaccurate", "Neutral (Neither accurate nor inaccurate)", "Slightly accurate", "Moderately accurate", "Accurate", "Highly accurate"]
-      },
-      {
-        "id": "transparency_rating",
-        "text": "On a scale from 1 (Not transparent at all) to 9 (Extremely transparent), how transparent did you find the ensemble’s decision-making process?",
-        "type": "likert",
-        "options": ["Not transparent at all", "Very opaque", "Somewhat opaque", "Slightly opaque", "Moderately transparent", "Reasonably transparent", "Very transparent", "Almost extremely transparent", "Extremely transparent"]
-      },
-      {
-        "id": "consistency_rating",
-        "text": "On a scale from 1 (Not consistent at all) to 9 (Highly consistent), how consistent was the explanation with what you expected from the ensemble’s decision?",
-        "type": "likert",
-        "options": ["Not consistent at all", "Very inconsistent", "Somewhat inconsistent", "Slightly inconsistent", "Moderately consistent", "Reasonably consistent", "Very consistent", "Almost extremely consistent", "Highly consistent"]
-      },
-      {
-        "id": "relevance_rating",
-        "text": "On a scale from 1 (Not relevant at all) to 9 (Highly relevant), how relevant were the justifications provided for the ensemble’s decision?",
-        "type": "likert",
-        "options" : ["Not relevant at all", "Very irrelevant", "Somewhat irrelevant", "Slightly irrelevant", "Moderately relevant", "Reasonably relevant", "Very relevant", "Almost extremely relevant", "Highly relevant"]
-      }
-    ],
-    "reviewQuestions":[
-      {
-        "id": "clarity_open",
-        "text": "What aspects of the explanation were unclear or confusing?",
-        "type": "textarea"
-      },
-      {
-        "id": "trust_open",
-        "text": "Did any part of the explanation increase or decrease your trust in the ensemble’s decision? If so, which part and why?",
-        "type": "textarea"
-      },
-      {
-        "id": "confidence_info",
-        "text": "What additional information would increase your confidence in the ensemble’s output?",
-        "type": "textarea"
-      },
-      {
-        "id": "relevance_open",
-        "text": "Were there any justifications that seemed unnecessary or missing?",
-        "type": "textarea"
-      }
-    ]
-  }
+        },
+        {
+          "id": 1,
+          "features": {
+            "battery_power": 1799.0,
+            "blue": 1.0,
+            "clock_speed": 0.5,
+            "dual_sim": 0.0,
+            "fc": 0.0,
+            "four_g": 0.0,
+            "int_memory": 49.0,
+            "m_dep": 0.4,
+            "mobile_wt": 107.0,
+            "n_cores": 4.0,
+            "pc": 2.0,
+            "px_height": 632.0,
+            "px_width": 1383.0,
+            "ram": 720.0,
+            "sc_h": 12.0,
+            "sc_w": 2.0,
+            "talk_time": 11.0,
+            "three_g": 1.0,
+            "touch_screen": 1.0,
+            "wifi": 1.0
+          },
+          "ground_truth": "0",
+          "model_prediction": "0",
+          "confidence": 0.659979760522691,
+          "explanations": {
+            "Xemble": {
+              "votes": [
+                {
+                  "model": "rf",
+                  "vote": "0"
+                },
+                {
+                  "model": "gb",
+                  "vote": "0"
+                },
+                {
+                  "model": "gb2",
+                  "vote": "0"
+                },
+                {
+                  "model": "gb3",
+                  "vote": "3"
+                },
+                {
+                  "model": "svc",
+                  "vote": "1"
+                },
+                {
+                  "model": "lr",
+                  "vote": "1"
+                },
+                {
+                  "model": "ada",
+                  "vote": "0"
+                },
+                {
+                  "model": "mlp",
+                  "vote": "1"
+                }
+              ],
+              "model_accuracies": [
+                {
+                  "model": "RF",
+                  "accuracy": 0.9925
+                },
+                {
+                  "model": "GB",
+                  "accuracy": 1.0
+                },
+                {
+                  "model": "GB2",
+                  "accuracy": 0.925
+                },
+                {
+                  "model": "GB3",
+                  "accuracy": 0.275
+                },
+                {
+                  "model": "SVC",
+                  "accuracy": 0.9675
+                },
+                {
+                  "model": "LR",
+                  "accuracy": 0.86
+                },
+                {
+                  "model": "ADA",
+                  "accuracy": 0.7525
+                },
+                {
+                  "model": "MLP",
+                  "accuracy": 0.4975
+                }
+              ],
+              "model_confidences": [
+                {
+                  "model": "rf",
+                  "confidence": 0.8
+                },
+                {
+                  "model": "gb",
+                  "confidence": 0.9787919008686241
+                },
+                {
+                  "model": "gb2",
+                  "confidence": 0.7601430324945551
+                },
+                {
+                  "model": "gb3",
+                  "confidence": 0.27197405903514654
+                },
+                {
+                  "model": "svc",
+                  "confidence": 0.5502580073567309
+                },
+                {
+                  "model": "lr",
+                  "confidence": 0.4715201246555322
+                },
+                {
+                  "model": "ada",
+                  "confidence": 0.6043434778037118
+                },
+                {
+                  "model": "mlp",
+                  "confidence": 0.3913681003976518
+                }
+              ],
+              "text": "1. The ensemble AI predicts a \"0\" outcome with an overall confidence level of 66.0%, suggesting a moderate level of certainty in this prediction.  \n2. The models show an agreement level of 58.5%, indicating that more than half of the models are aligned with this prediction, but there is some variance in their individual outputs.  \n3. The reliability of this prediction is strengthened by the high performance and confidence of key models like Random Forest and Gradient Boosting, which both support the predicted outcome."
+            },
+            "SHAP": {
+              "shap_values": [
+                {
+                  "feature": "ram",
+                  "value": 0.43427424537674103
+                },
+                {
+                  "feature": "battery_power",
+                  "value": -0.07829001180736435
+                },
+                {
+                  "feature": "px_width",
+                  "value": 0.02111231686817532
+                },
+                {
+                  "feature": "px_height",
+                  "value": 0.020839841732728463
+                },
+                {
+                  "feature": "wifi",
+                  "value": 0.015861120359138923
+                },
+                {
+                  "feature": "mobile_wt",
+                  "value": -0.010883074532476198
+                },
+                {
+                  "feature": "touch_screen",
+                  "value": -0.00947276419633768
+                },
+                {
+                  "feature": "talk_time",
+                  "value": 0.005426574344557009
+                },
+                {
+                  "feature": "m_dep",
+                  "value": 0.005301634220493359
+                },
+                {
+                  "feature": "clock_speed",
+                  "value": -0.0052503928257173925
+                },
+                {
+                  "feature": "pc",
+                  "value": -0.0047466401801980525
+                },
+                {
+                  "feature": "sc_w",
+                  "value": -0.003891103164100726
+                },
+                {
+                  "feature": "three_g",
+                  "value": 0.003014357745882992
+                },
+                {
+                  "feature": "four_g",
+                  "value": -0.002681434428290608
+                },
+                {
+                  "feature": "blue",
+                  "value": 0.0023031128155555076
+                },
+                {
+                  "feature": "dual_sim",
+                  "value": -0.0021454942721351126
+                },
+                {
+                  "feature": "fc",
+                  "value": 0.001900066830174095
+                },
+                {
+                  "feature": "int_memory",
+                  "value": -0.001443021879901333
+                },
+                {
+                  "feature": "sc_h",
+                  "value": 0.001378117260815975
+                },
+                {
+                  "feature": "n_cores",
+                  "value": 0.00036439968358779727
+                }
+              ],
+              "text": "The model predicts class 0 as the most likely outcome. The most influential feature that pushed the prediction towards class 0 is ram, with a significant positive contribution of +0.4343. Although battery_power had a slight negative impact of -0.0783, its effect was outweighed by the strong positive influence of ram.\n\nWhen considering class 1, battery_power showed a positive influence of +0.0440, but this was not enough to surpass the substantial impact of ram favoring class 0. Additionally, for class 3, battery_power had a positive contribution of +0.0514, yet it was overshadowed by the negative influence of ram (-0.2531) for that class. These comparisons highlight why class 0 emerged as the most probable prediction, driven primarily by the strong positive effect of ram."
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "clarity_rating",
+      "text": "On a scale from 1 (Not clear at all) to 9 (Extremely clear), how clearly did the explanation communicate how the ensemble reached its decision?",
+      "type": "likert",
+      "options": [
+        "Not clear at all",
+        "Very unclear",
+        "Somewhat unclear",
+        "Slightly unclear",
+        "Moderately clear",
+        "Reasonably clear",
+        "Very clear",
+        "Almost extremely clear",
+        "Extremely clear"
+      ]
+    },
+    {
+      "id": "trust_rating",
+      "text": "On a scale from 1 (Do not trust at all) to 9 (Fully trust), to what extent do you trust the explanation provided?",
+      "type": "likert",
+      "options": [
+        "Do not trust at all",
+        "Highly distrust",
+        "Moderately distrust",
+        "Slightly distrust",
+        "Neutral (Neither trust nor distrust)",
+        "Slightly trust",
+        "Moderately trust",
+        "Highly trust",
+        "Fully trust"
+      ]
+    },
+    {
+      "id": "comprehensibility_rating",
+      "text": "On a scale from 1 (Very difficult) to 9 (Very easy), how easy was it to understand the explanation?",
+      "type": "likert",
+      "options": [
+        "Very difficult",
+        "Difficult",
+        "Slightly difficult",
+        "Moderately difficult",
+        "Neutral (Neither easy nor difficult)",
+        "Slightly easy",
+        "Moderately easy",
+        "Easy",
+        "Very easy"
+      ]
+    },
+    {
+      "id": "comprehensibility_detail",
+      "text": "Did the explanation contain too much technical detail, too little, or was it balanced?",
+      "type": "multiple",
+      "options": [
+        "Too much",
+        "Too little",
+        "Balanced"
+      ]
+    },
+    {
+      "id": "satisfaction_rating",
+      "text": "On a scale from 1 (Not satisfied at all) to 9 (Extremely satisfied), how satisfied are you with the explanation provided?",
+      "type": "likert",
+      "options": [
+        "Not satisfied at all",
+        "Very unsatisfied",
+        "Somewhat unsatisfied",
+        "Slightly unsatisfied",
+        "Moderately satisfied",
+        "Reasonably satisfied",
+        "Very satisfied",
+        "Almost extremely satisfied",
+        "Extremely satisfied"
+      ]
+    },
+    {
+      "id": "accuracy_rating",
+      "text": "On a scale from 1 (Very inaccurate) to 9 (Highly accurate), how accurate do you believe the ensemble's prediction was based on the explanation?",
+      "type": "likert",
+      "options": [
+        "Very inaccurate",
+        "Inaccurate",
+        "Slightly inaccurate",
+        "Moderately inaccurate",
+        "Neutral (Neither accurate nor inaccurate)",
+        "Slightly accurate",
+        "Moderately accurate",
+        "Accurate",
+        "Highly accurate"
+      ]
+    },
+    {
+      "id": "transparency_rating",
+      "text": "On a scale from 1 (Not transparent at all) to 9 (Extremely transparent), how transparent did you find the ensemble\u00e2\u20ac\u2122s decision-making process?",
+      "type": "likert",
+      "options": [
+        "Not transparent at all",
+        "Very opaque",
+        "Somewhat opaque",
+        "Slightly opaque",
+        "Moderately transparent",
+        "Reasonably transparent",
+        "Very transparent",
+        "Almost extremely transparent",
+        "Extremely transparent"
+      ]
+    },
+    {
+      "id": "consistency_rating",
+      "text": "On a scale from 1 (Not consistent at all) to 9 (Highly consistent), how consistent was the explanation with what you expected from the ensemble\u00e2\u20ac\u2122s decision?",
+      "type": "likert",
+      "options": [
+        "Not consistent at all",
+        "Very inconsistent",
+        "Somewhat inconsistent",
+        "Slightly inconsistent",
+        "Moderately consistent",
+        "Reasonably consistent",
+        "Very consistent",
+        "Almost extremely consistent",
+        "Highly consistent"
+      ]
+    },
+    {
+      "id": "relevance_rating",
+      "text": "On a scale from 1 (Not relevant at all) to 9 (Highly relevant), how relevant were the justifications provided for the ensemble\u00e2\u20ac\u2122s decision?",
+      "type": "likert",
+      "options": [
+        "Not relevant at all",
+        "Very irrelevant",
+        "Somewhat irrelevant",
+        "Slightly irrelevant",
+        "Moderately relevant",
+        "Reasonably relevant",
+        "Very relevant",
+        "Almost extremely relevant",
+        "Highly relevant"
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "id": "clarity_open",
+      "text": "What aspects of the explanation were unclear or confusing?",
+      "type": "textarea"
+    },
+    {
+      "id": "trust_open",
+      "text": "Did any part of the explanation increase or decrease your trust in the ensemble\u00e2\u20ac\u2122s decision? If so, which part and why?",
+      "type": "textarea"
+    },
+    {
+      "id": "confidence_info",
+      "text": "What additional information would increase your confidence in the ensemble\u00e2\u20ac\u2122s output?",
+      "type": "textarea"
+    },
+    {
+      "id": "relevance_open",
+      "text": "Were there any justifications that seemed unnecessary or missing?",
+      "type": "textarea"
+    }
+  ]
+}
