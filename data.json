@@ -7,336 +7,196 @@
         {
           "id": 0,
           "features": {
-            "battery_power": 1799.0,
-            "blue": 1.0,
-            "clock_speed": 0.5,
-            "dual_sim": 0.0,
-            "fc": 0.0,
-            "four_g": 0.0,
-            "int_memory": 49.0,
-            "m_dep": 0.4,
-            "mobile_wt": 107.0,
-            "n_cores": 4.0,
-            "pc": 2.0,
-            "px_height": 632.0,
-            "px_width": 1383.0,
-            "ram": 720.0,
-            "sc_h": 12.0,
-            "sc_w": 2.0,
-            "talk_time": 11.0,
-            "three_g": 1.0,
-            "touch_screen": 1.0,
-            "wifi": 1.0
+            "Car Buying Price": "medium",
+            "Maintenance Cost": "low",
+            "Number of Doors": 3,
+            "Seating Capacity": 4,
+            "Luggage Boot Size": "medium",
+            "Safety Rating": "medium"
           },
-          "ground_truth": "0",
-          "model_prediction": "0",
-          "confidence": 0.659979760522691,
+          "ground_truth": "acceptable",
+          "model_prediction": "acceptable",
+          "confidence": 0.6691478688094864,
           "explanations": {
             "Xemble": {
               "additional_info": [
                 {
-                  "model": "gb",
-                  "vote": "0",
-                  "accuracy": 1.0,
-                  "confidence": 0.9787919008686241
-                },
-                {
-                  "model": "svc",
-                  "vote": "1",
-                  "accuracy": 0.9675,
-                  "confidence": 0.5502580073567309
-                },
-                {
-                  "model": "lr",
-                  "vote": "1",
-                  "accuracy": 0.86,
-                  "confidence": 0.4715201246555322
+                  "model": "gb3",
+                  "vote": "unacceptable",
+                  "accuracy": 0.6825,
+                  "confidence": 0.6773012269512111
                 },
                 {
                   "model": "ada",
-                  "vote": "0",
-                  "accuracy": 0.7525,
-                  "confidence": 0.6043434778037118
-                },
-                {
-                  "model": "rf",
-                  "vote": "0",
-                  "accuracy": 0.9925,
-                  "confidence": 0.8
-                },
-                {
-                  "model": "gb2",
-                  "vote": "0",
-                  "accuracy": 0.925,
-                  "confidence": 0.7601430324945551
+                  "vote": "acceptable",
+                  "accuracy": 0.7225,
+                  "confidence": 0.3815550616768402
                 },
                 {
                   "model": "mlp",
-                  "vote": "1",
-                  "accuracy": 0.4975,
-                  "confidence": 0.3913681003976518
+                  "vote": "unacceptable",
+                  "accuracy": 0.695,
+                  "confidence": 0.7135199901036479
                 },
                 {
-                  "model": "gb3",
-                  "vote": "3",
-                  "accuracy": 0.275,
-                  "confidence": 0.27197405903514654
+                  "model": "svc",
+                  "vote": "good",
+                  "accuracy": 0.7775,
+                  "confidence": 0.4729359529747508
+                },
+                {
+                  "model": "lr",
+                  "vote": "unacceptable",
+                  "accuracy": 0.6775,
+                  "confidence": 0.7229206486844465
+                },
+                {
+                  "model": "gb",
+                  "vote": "acceptable",
+                  "accuracy": 0.975,
+                  "confidence": 0.8424602978300076
+                },
+                {
+                  "model": "rf",
+                  "vote": "acceptable",
+                  "accuracy": 0.995,
+                  "confidence": 0.9
+                },
+                {
+                  "model": "gb2",
+                  "vote": "acceptable",
+                  "accuracy": 0.835,
+                  "confidence": 0.5360086224487928
                 }
               ],
-              "text": "1. The ensemble AI predicts a \"0\" outcome with an overall confidence level of 66.0%, suggesting a moderate level of certainty in this prediction.  \n2. The models show an agreement level of 58.5%, indicating that more than half of the models are aligned with this prediction, but there is some variance in their individual outputs.  \n3. The reliability of this prediction is strengthened by the high performance and confidence of key models like Random Forest and Gradient Boosting, which both support the predicted outcome."
+              "text": "1. The ensemble AI predicts the outcome as \"acceptable\" with an overall confidence level of 66.9%.\n\n2. The models show a moderate agreement level of 55.5%, indicating some divergence in opinions, but the strongest models like Random Forest and Gradient Boosting support the \"acceptable\" prediction.\n\n3. The reliability of this prediction is bolstered by the high performance and confidence of key models, such as the Random Forest, which consistently deliver accurate results, making the \"acceptable\" outcome a trustworthy choice for decision-making."
             },
             "SHAP": {
               "shap_values": [
                 {
-                  "feature": "ram",
-                  "value": 0.43427424537674103
+                  "feature": "Seating Capacity",
+                  "value": 0.12224646501291556
                 },
                 {
-                  "feature": "battery_power",
-                  "value": -0.07829001180736435
+                  "feature": "Safety Rating",
+                  "value": 0.11025339906832933
                 },
                 {
-                  "feature": "px_width",
-                  "value": 0.02111231686817532
+                  "feature": "Number of Doors",
+                  "value": 0.021120675485443496
                 },
                 {
-                  "feature": "px_height",
-                  "value": 0.020839841732728463
+                  "feature": "Car Buying Price",
+                  "value": 0.021035808158602908
                 },
                 {
-                  "feature": "wifi",
-                  "value": 0.015861120359138923
+                  "feature": "Luggage Boot Size",
+                  "value": 0.012969454841073402
                 },
                 {
-                  "feature": "mobile_wt",
-                  "value": -0.010883074532476198
-                },
-                {
-                  "feature": "touch_screen",
-                  "value": -0.00947276419633768
-                },
-                {
-                  "feature": "talk_time",
-                  "value": 0.005426574344557009
-                },
-                {
-                  "feature": "m_dep",
-                  "value": 0.005301634220493359
-                },
-                {
-                  "feature": "clock_speed",
-                  "value": -0.0052503928257173925
-                },
-                {
-                  "feature": "pc",
-                  "value": -0.0047466401801980525
-                },
-                {
-                  "feature": "sc_w",
-                  "value": -0.003891103164100726
-                },
-                {
-                  "feature": "three_g",
-                  "value": 0.003014357745882992
-                },
-                {
-                  "feature": "four_g",
-                  "value": -0.002681434428290608
-                },
-                {
-                  "feature": "blue",
-                  "value": 0.0023031128155555076
-                },
-                {
-                  "feature": "dual_sim",
-                  "value": -0.0021454942721351126
-                },
-                {
-                  "feature": "fc",
-                  "value": 0.001900066830174095
-                },
-                {
-                  "feature": "int_memory",
-                  "value": -0.001443021879901333
-                },
-                {
-                  "feature": "sc_h",
-                  "value": 0.001378117260815975
-                },
-                {
-                  "feature": "n_cores",
-                  "value": 0.00036439968358779727
+                  "feature": "Maintenance Cost",
+                  "value": 0.011469210333352709
                 }
               ],
-              "text": "The model predicts class 0 as the most likely outcome. The most influential feature that pushed the prediction towards class 0 is ram, with a significant positive contribution of +0.4343. Although battery_power had a slight negative impact of -0.0783, its effect was outweighed by the strong positive influence of ram.\n\nWhen considering class 1, battery_power showed a positive influence of +0.0440, but this was not enough to surpass the substantial impact of ram favoring class 0. Additionally, for class 3, battery_power had a positive contribution of +0.0514, yet it was overshadowed by the negative influence of ram (-0.2531) for that class. These comparisons highlight why class 0 emerged as the most probable prediction, driven primarily by the strong positive effect of ram."
+              "text": "The model predicts \"acceptable\" as the most likely outcome. The most influential features that pushed the prediction towards \"acceptable\" are the seating capacity and the safety rating. These features had a strong positive influence, making them the primary drivers of this prediction. The number of doors also contributed positively, but its impact was relatively minor compared to the other two features.\n\nFor the \"good\" class, although maintenance cost and seating capacity had some positive influence, they were not as impactful as the seating capacity and safety rating for the \"acceptable\" class. Additionally, the car buying price had a minimal positive effect.\n\nIn contrast, the \"unacceptable\" class was strongly influenced by negative contributions from seating capacity and safety rating, which significantly reduced its likelihood. These negative influences were much stronger compared to any positive influences for the \"good\" class. For the \"very good\" class, the safety rating and number of doors contributed negatively, further diminishing its likelihood compared to the \"acceptable\" class. Overall, the positive influences for \"acceptable\" were more compelling, leading to its prediction as the most likely outcome."
             }
           }
         },
         {
           "id": 1,
           "features": {
-            "battery_power": 1656.0,
-            "blue": 1.0,
-            "clock_speed": 1.6,
-            "dual_sim": 1.0,
-            "fc": 0.0,
-            "four_g": 0.0,
-            "int_memory": 16.0,
-            "m_dep": 1.0,
-            "mobile_wt": 117.0,
-            "n_cores": 7.0,
-            "pc": 2.0,
-            "px_height": 320.0,
-            "px_width": 899.0,
-            "ram": 2856.0,
-            "sc_h": 14.0,
-            "sc_w": 3.0,
-            "talk_time": 20.0,
-            "three_g": 1.0,
-            "touch_screen": 1.0,
-            "wifi": 1.0
+            "Car Buying Price": "very high",
+            "Maintenance Cost": "medium",
+            "Number of Doors": "5 or more",
+            "Seating Capacity": 4,
+            "Luggage Boot Size": "small",
+            "Safety Rating": "low"
           },
-          "ground_truth": "2",
-          "model_prediction": "2",
-          "confidence": 0.6038604023233917,
+          "ground_truth": "unacceptable",
+          "model_prediction": "unacceptable",
+          "confidence": 0.8603839714759949,
           "explanations": {
             "Xemble": {
               "additional_info": [
                 {
-                  "model": "rf",
-                  "vote": "2",
-                  "accuracy": 0.9925,
-                  "confidence": 0.6
-                },
-                {
-                  "model": "ada",
-                  "vote": "3",
-                  "accuracy": 0.7525,
-                  "confidence": 0.7734393163327438
-                },
-                {
                   "model": "gb",
-                  "vote": "2",
-                  "accuracy": 1.0,
-                  "confidence": 0.6631216365172057
+                  "vote": "unacceptable",
+                  "accuracy": 0.975,
+                  "confidence": 0.9884048570725742
                 },
                 {
                   "model": "lr",
-                  "vote": "2",
-                  "accuracy": 0.86,
-                  "confidence": 0.5005554166392857
-                },
-                {
-                  "model": "mlp",
-                  "vote": "3",
-                  "accuracy": 0.4975,
-                  "confidence": 0.27091232434810386
-                },
-                {
-                  "model": "gb2",
-                  "vote": "2",
-                  "accuracy": 0.925,
-                  "confidence": 0.5083916418734806
+                  "vote": "unacceptable",
+                  "accuracy": 0.6775,
+                  "confidence": 0.8173826262661176
                 },
                 {
                   "model": "gb3",
-                  "vote": "3",
-                  "accuracy": 0.275,
-                  "confidence": 0.27343418210829085
+                  "vote": "unacceptable",
+                  "accuracy": 0.6825,
+                  "confidence": 0.6866171976001566
+                },
+                {
+                  "model": "ada",
+                  "vote": "unacceptable",
+                  "accuracy": 0.7225,
+                  "confidence": 0.8075012932348756
                 },
                 {
                   "model": "svc",
-                  "vote": "2",
-                  "accuracy": 0.9675,
-                  "confidence": 0.8629010770277554
+                  "vote": "unacceptable",
+                  "accuracy": 0.7775,
+                  "confidence": 0.933574954807586
+                },
+                {
+                  "model": "gb2",
+                  "vote": "unacceptable",
+                  "accuracy": 0.835,
+                  "confidence": 0.8765989377904214
+                },
+                {
+                  "model": "rf",
+                  "vote": "unacceptable",
+                  "accuracy": 0.995,
+                  "confidence": 1.0
+                },
+                {
+                  "model": "mlp",
+                  "vote": "unacceptable",
+                  "accuracy": 0.695,
+                  "confidence": 0.6470791820202428
                 }
               ],
-              "text": "1. The ensemble AI predicts a category \"2\" with an overall confidence level of 60.4%.\n\n2. There is a 75.7% agreement among the models, indicating a strong consensus towards this prediction.\n\n3. This prediction is reliable because the majority of high-performing models, such as Random Forest and Support Vector Classifier, agree on this outcome, providing a solid foundation for decision-making."
+              "text": "1. The ensemble AI predicts the outcome as \"unacceptable\" with a high overall confidence level of 86.0%.\n\n2. All models unanimously agree on this prediction, with an agreement level of 100%, indicating strong consistency across different methodologies.\n\n3. This prediction is highly reliable due to the unanimous consensus among the models, each showing a high level of confidence, particularly the Random Forest model with perfect confidence, reinforcing the trustworthiness of the outcome."
             },
             "SHAP": {
               "shap_values": [
                 {
-                  "feature": "ram",
-                  "value": 0.18836130235922366
+                  "feature": "Safety Rating",
+                  "value": 0.1280287871646789
                 },
                 {
-                  "feature": "battery_power",
-                  "value": -0.05985509740299197
+                  "feature": "Seating Capacity",
+                  "value": -0.056525029562264247
                 },
                 {
-                  "feature": "px_width",
-                  "value": 0.041963010622414094
+                  "feature": "Car Buying Price",
+                  "value": 0.04907417153811807
                 },
                 {
-                  "feature": "pc",
-                  "value": 0.02461378754812086
+                  "feature": "Luggage Boot Size",
+                  "value": 0.04759976508127731
                 },
                 {
-                  "feature": "m_dep",
-                  "value": 0.02063070067025698
+                  "feature": "Number of Doors",
+                  "value": 0.010559511818372471
                 },
                 {
-                  "feature": "int_memory",
-                  "value": -0.01531684947458503
-                },
-                {
-                  "feature": "n_cores",
-                  "value": 0.015297872407837754
-                },
-                {
-                  "feature": "px_height",
-                  "value": 0.012312810189824495
-                },
-                {
-                  "feature": "touch_screen",
-                  "value": -0.011721238906308764
-                },
-                {
-                  "feature": "sc_h",
-                  "value": 0.010994978560481077
-                },
-                {
-                  "feature": "four_g",
-                  "value": 0.010735631788041454
-                },
-                {
-                  "feature": "dual_sim",
-                  "value": 0.0092236163279078
-                },
-                {
-                  "feature": "wifi",
-                  "value": 0.007511798602731807
-                },
-                {
-                  "feature": "three_g",
-                  "value": 0.007166426370420977
-                },
-                {
-                  "feature": "talk_time",
-                  "value": -0.00668779719185873
-                },
-                {
-                  "feature": "clock_speed",
-                  "value": 0.004794273764963359
-                },
-                {
-                  "feature": "fc",
-                  "value": 0.003440055370016743
-                },
-                {
-                  "feature": "mobile_wt",
-                  "value": 0.0033263923162204167
-                },
-                {
-                  "feature": "sc_w",
-                  "value": 0.0027711508841479224
-                },
-                {
-                  "feature": "blue",
-                  "value": 0.0027183507772149066
+                  "feature": "Maintenance Cost",
+                  "value": -0.006259983028314859
                 }
               ],
-              "text": "The model predicts class 2 as the most likely outcome. The most influential features that pushed the prediction towards class 2 are ram (+0.1884) and px_width (+0.0420). Although battery_power contributed negatively (-0.0599), its impact was outweighed by the strong positive effects of ram and px_width.\n\nFor class 3, while battery_power showed a positive influence (+0.0890), it wasn't enough to overcome the stronger impact of ram favoring class 2. Additionally, px_width contributed negatively (-0.0597) for class 3, which further diminished its likelihood compared to class 2.\n\nIn contrast, class 1 had a slight positive contribution from talk_time (+0.0233), but this was not sufficient to offset the negative influence of ram (-0.1411) when compared to the strong positive ram influence for class 2. Thus, the model confidently predicts class 2 as the most probable outcome."
+              "text": "The model predicts \"unacceptable\" as the most likely outcome. The most influential features that pushed the prediction towards \"unacceptable\" are the Safety Rating and Car Buying Price. The Safety Rating had a particularly strong positive influence, significantly more than any other feature, while the Car Buying Price also contributed positively, albeit to a lesser extent. However, the Seating Capacity had a negative impact, but its influence was not strong enough to shift the prediction away from \"unacceptable.\"\n\nWhen we compare this with the \"acceptable\" class, the Seating Capacity did have a positive influence, but it was not as strong as the negative impact of the Safety Rating, which was a decisive factor in favoring the \"unacceptable\" prediction. For the \"good\" class, although Maintenance Cost had a slight positive influence, it was overshadowed by the negative effects of both Car Buying Price and Safety Rating, which were more aligned with the \"unacceptable\" prediction. Thus, the combination of these factors led the model to confidently predict \"unacceptable\" as the outcome."
             }
           }
         }
@@ -436,7 +296,7 @@
     },
     {
       "id": "transparency_rating",
-      "text": "On a scale from 1 (Not transparent at all) to 9 (Extremely transparent), how transparent did you find the ensemble\u00e2\u20ac\u2122s decision-making process?",
+      "text": "On a scale from 1 (Not transparent at all) to 9 (Extremely transparent), how transparent did you find the ensemble's decision-making process?",
       "type": "likert",
       "options": [
         "Not transparent at all",
@@ -452,7 +312,7 @@
     },
     {
       "id": "consistency_rating",
-      "text": "On a scale from 1 (Not consistent at all) to 9 (Highly consistent), how consistent was the explanation with what you expected from the ensemble\u00e2\u20ac\u2122s decision?",
+      "text": "On a scale from 1 (Not consistent at all) to 9 (Highly consistent), how consistent was the explanation with what you expected from the ensemble's decision?",
       "type": "likert",
       "options": [
         "Not consistent at all",
@@ -468,7 +328,7 @@
     },
     {
       "id": "relevance_rating",
-      "text": "On a scale from 1 (Not relevant at all) to 9 (Highly relevant), how relevant were the justifications provided for the ensemble\u00e2\u20ac\u2122s decision?",
+      "text": "On a scale from 1 (Not relevant at all) to 9 (Highly relevant), how relevant were the justifications provided for the ensemble's decision?",
       "type": "likert",
       "options": [
         "Not relevant at all",
@@ -491,12 +351,12 @@
     },
     {
       "id": "trust_open",
-      "text": "Did any part of the explanation increase or decrease your trust in the ensemble\u00e2\u20ac\u2122s decision? If so, which part and why?",
+      "text": "Did any part of the explanation increase or decrease your trust in the ensemble's decision? If so, which part and why?",
       "type": "textarea"
     },
     {
       "id": "confidence_info",
-      "text": "What additional information would increase your confidence in the ensemble\u00e2\u20ac\u2122s output?",
+      "text": "What additional information would increase your confidence in the ensemble's output?",
       "type": "textarea"
     },
     {
