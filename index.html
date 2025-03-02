@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
   <title>Xemble Explanation Questionnaire</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
   <style>
@@ -16,7 +21,7 @@
       background: #f5f5f5;
     }
     .container {
-      max-width: 1000px;
+      max-width: 1500px;
       margin: 0 auto;
       background: white;
       padding: 20px;
@@ -101,31 +106,37 @@
     /* Update Likert scale styles */
     .likert-scale {
       display: flex;
-      flex-direction: row; /* added for horizontal layout */
+      flex-direction: row;
       justify-content: space-between;
       margin: 20px 0;
       text-align: center;
     }
     .likert-option {
       flex: 1;
-      padding: 10px;
+      padding: 2px;
       cursor: pointer;
       border: 1px solid #ddd;
-      margin: 0 5px;
+      margin: 0 0px;
       border-radius: 4px;
     }
-    .likert-option.selected {
-      background: #e3f2fd;
-      border-color: #2196F3;
-    }
+    
     .likert-label {
       font-size: 0.8em;
       margin-top: 5px;
     }
+
+    .likert-option.selected {
+      background: #e3f2fd;
+      border-color: #2196F3;
+    }
+
     .explanation {
       font-style: italic;
       margin-top: 10px;
       color: #555;
+    }
+    .explanation-text {
+      line-height: 23px;;
     }
     .current-question {
       font-style: italic;
@@ -154,9 +165,72 @@
     .votes-table th {
       background-color: #f5f5f5;
     }
+
+    .votes-table-container {
+      margin: 10px 0;
+    }
+
+    .votes-table-button {
+      width: 100%;
+      max-width: 400px;
+      padding: 8px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    .votes-table-wrapper {
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .votes-table-wrapper.show {
+      display: block;
+    }
+
+    .votes-table {
+      width: 100%;
+      max-width: 400px;
+      margin: 0;
+      border-collapse: collapse;
+    }
+
+    .explanations-container {
+      display: flex;
+      gap: 20px;
+      justify-content: flex-start; /* Change from default to flex-start */
+    }
+    .explanation-column {
+      width: 50%; /* Set fixed width instead of flex: 1 */
+      flex: 0 0 49%; /* Prevent growing or shrinking */
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      background: #fafafa;
+    }
+    .explanation-column .likert-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .explanation-column .likert-option {
+      flex: 1;
+      margin: 0 1px;
+      text-align: center;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <!-- Add hidden HTML template for transition page -->
+  <template id="transition-1" style="display: none;">
+    <h3>Transition</h3>
+    <p>Get ready for the next question!</p>
+  </template>
   <div id="app" class="container">
     <!-- Consent Screen -->
     <div v-if="!consentGiven" class="section">
@@ -165,10 +239,13 @@
         This survey aims to gather information about your preferences and experiences in software development and your evaluation of AI explanations. Your responses will be used for research purposes only.
       </p>
       <h3>Consent</h3>
-      <p>
+      <p v-if="!urlParamsValid" style="color: red;">
+        Missing required parameters. Please make sure you are using the correct URL.
+      </p>
+      <p v-else>
         By proceeding with this survey, you consent to participate in this research study. Your participation is voluntary and you may withdraw at any time.
       </p>
-      <button @click="giveConsent()">I Consent</button>
+      <button @click="giveConsent()" :disabled="!urlParamsValid">I Consent</button>
     </div>
 
     <!-- Training Screen -->
@@ -197,6 +274,22 @@
       <button @click="completeTraining()" :disabled="!trainingAnswer">Proceed to Survey</button>
     </div>
 
+    <!-- New Info Screen: Explanation on the dataset and research -->
+    <div v-else-if="showInfoScreen" class="section">
+      <h2>Information</h2>
+      <p>
+        This survey uses a real-world dataset to evaluate AI explanations as part of our research into explainable machine learning. Please review the details and proceed when ready.
+      </p>
+      <button @click="proceedToSurvey">Proceed to Survey</button>
+    </div>
+
+    <!-- Insert Transition Page Block -->
+    <div v-if="showTransitionPage" class="section">
+      <!-- Display custom HTML content -->
+      <div v-html="currentTransitionHtml"></div>
+      <button @click="continueSurvey">Continue</button>
+    </div>
+
     <!-- Survey Questions -->
     <div v-else-if="surveyStarted && !surveyCompleted" class="section">
       <h2>Survey Questions</h2>
@@ -207,131 +300,286 @@
             Dataset: {{ currentCase.dataset }} | Sample ID: {{ currentCase.id }}
           </h3>
           <p><strong>Feature Values:</strong></p>
-          <table>
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(value, key) in currentCase.features" :key="key">
-                <td>{{ key }}</td>
-                <td>{{ value }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div>
-            <strong>Explanation ({{ currentMethod }}):</strong>
-            
-            <!-- Table for Xemble votes -->
-            <template v-if="currentMethod === 'Xemble' && currentCase?.explanations?.Xemble?.votes">
-              <table class="votes-table">
-                <thead>
-                  <tr>
-                    <th>Model</th>
-                    <th>Vote</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="vote in currentCase.explanations.Xemble.votes" :key="vote.model">
-                    <td>{{ vote.model }}</td>
-                    <td>{{ vote.vote }}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p>{{ currentCase.explanations.Xemble.text }}</p>
-            </template>
-            
-            <!-- SHAP explanation -->
-            <template v-if="currentMethod === 'SHAP' && currentCase?.explanations?.SHAP?.shap_values">
-              <table class="votes-table">
-                <thead>
-                  <tr>
-                    <th>Feature</th>
-                    <th>Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="shapValue in currentCase.explanations.SHAP.shap_values" :key="shapValue.feature">
-                    <td>{{ shapValue.feature }}</td>
-                    <td>{{ shapValue.value.toFixed(3) }}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p>{{ currentCase.explanations.SHAP.text }}</p>
-            </template>
+          <div style="max-height: 300px; overflow-y: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(value, key) in currentCase.features" :key="key">
+                  <td>{{ key }}</td>
+                  <td>{{ value }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          
         </div>
 
-        <!-- Display Question Text and Options -->
-        <p><strong> {{ currentSurveyQuestion.text }}</strong></p>
+        <!-- New Explanations Container -->
+        <div class="explanations-container">
+          <!-- Left Explanation Column -->
+          <div class="explanation-column">
+            <div>
+              <strong>Explanation ({{ leftMethod }}):</strong>
+              <template v-if="leftMethod==='Xemble' && currentCase?.explanations?.Xemble">
+                <div class="votes-table-container">
+                  <button class="votes-table-button" @click="toggleVotesTable('left')">
+                    Show/Hide Additional Information
+                  </button>
+                  <div class="votes-table-wrapper" :class="{ show: leftToggled }">
+                    <table class="votes-table">
+                      <thead>
+                        <tr>
+                          <th>Model</th>
+                          <th>Vote</th>
+                          <th>accuracy</th>
+                          <th>confidence</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="info in currentCase.explanations.Xemble.additional_info" :key="info.model">
+                          <td>{{ info.model }}</td>
+                          <td>{{ info.vote }}</td>
+                          <td>{{ info.accuracy.toFixed(3) }}</td>
+                          <td>{{ info.confidence.toFixed(3) }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                
+                <p class="explanation-text">{{ currentCase.explanations.Xemble.text }}</p>
+              </template>
+              <template v-if="leftMethod==='SHAP' && currentCase?.explanations?.SHAP">
+                <div class="votes-table-container">
+                  <button class="votes-table-button" @click="toggleVotesTable('left')">
+                    Show/Hide Additional Information
+                  </button>
+                  <div class="votes-table-wrapper" :class="{ show: leftToggled }">
+                    <table class="votes-table">
+                      <thead>
+                        <tr>
+                          <th>Feature</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="shapValue in currentCase.explanations.SHAP.shap_values" :key="shapValue.feature">
+                          <td>{{ shapValue.feature }}</td>
+                          <td>{{ shapValue.value.toFixed(3) }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <p class="explanation-text">{{ currentCase.explanations.SHAP.text }}</p>
+              </template>
+            </div>
+            <!-- Evaluation Question for Left -->
+            <div class="evaluation">
+              <!-- Display Question Text and Options -->
+              <p><strong> {{ currentSurveyQuestion.text }}</strong></p>
+              <div v-if="currentSurveyQuestion.type==='likert'" class="likert-scale">
+                <div
+                  v-for="(label, index) in currentSurveyQuestion.options"
+                  :key="index"
+                  class="likert-option"
+                  :class="{ selected: leftAnswer === index + 1 }"
+                  @click="selectExplanationAnswer('left', index + 1)"
+                  :style="{ pointerEvents: leftAnswer ? 'none' : 'auto' }"
+                >
+                  <div>{{ index + 1 }}</div>
+                  <div class="likert-label">{{ label }}</div>
+                </div>
+              </div>
 
-        <!-- Likert Scale Questions -->
-        <div v-if="currentSurveyQuestion.type==='likert'" class="likert-scale">
-          <div
-            v-for="(label, index) in currentSurveyQuestion.options"
-            :key="index"
-            class="likert-option"
-            :class="{ selected: currentSampleAnswers[currentSurveyQuestion.id] === index + 1 }"
-            @click="answerSurvey(index + 1)"
-          >
-            <div>{{ index + 1 }}</div>
-            <div class="likert-label">{{ label }}</div>
+              <div v-else-if="currentSurveyQuestion.type==='multiple'" class="options">
+                <div
+                  v-for="option in currentSurveyQuestion.options"
+                  :key="option"
+                  class="option"
+                  :class="{ selected: leftAnswer === option }"
+                  @click="selectExplanationAnswer('left', option)"
+                >
+                  {{ option }}
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <!-- Right Explanation Column (shown only after left answer selected) -->
+          <div class="explanation-column" v-if="leftAnswer">
+            <div>
+              <strong>Explanation ({{ rightMethod }}):</strong>
+              <template v-if="rightMethod==='Xemble' && currentCase?.explanations?.Xemble">
+                <div class="votes-table-container">
+                  <button class="votes-table-button" @click="toggleVotesTable('right')">
+                    Show/Hide Additional Information
+                  </button>
+                  <div class="votes-table-wrapper" :class="{ show: rightToggled }">
+                    <table class="votes-table">
+                      <thead>
+                        <tr>
+                          <th>Model</th>
+                          <th>Vote</th>
+                          <th>accuracy</th>
+                          <th>confidence</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="info in currentCase.explanations.Xemble.additional_info" :key="info.model">
+                          <td>{{ info.model }}</td>
+                          <td>{{ info.vote }}</td>
+                          <td>{{ info.accuracy.toFixed(3) }}</td>
+                          <td>{{ info.confidence.toFixed(3) }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <p class="explanation-text">{{ currentCase.explanations.Xemble.text }}</p>
+              </template>
+              <template v-if="rightMethod==='SHAP' && currentCase?.explanations?.SHAP">
+                <div class="votes-table-container">
+                  <button class="votes-table-button" @click="toggleVotesTable('right')">
+                    Show/Hide Additional Information
+                  </button>
+                  <div class="votes-table-wrapper" :class="{ show: rightToggled }">
+                    <table class="votes-table">
+                      <thead>
+                        <tr>
+                          <th>Feature</th>
+                          <th>Value</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="shapValue in currentCase.explanations.SHAP.shap_values" :key="shapValue.feature">
+                          <td>{{ shapValue.feature }}</td>
+                          <td>{{ shapValue.value.toFixed(3) }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <p class="explanation-text">{{ currentCase.explanations.SHAP.text }}</p>
+              </template>
+            </div>
+            <!-- Evaluation Question for Right -->
+            <div class="evaluation">
+              <!-- Display Question Text and Options -->
+              <p><strong> {{ currentSurveyQuestion.text }}</strong></p>
+              <div v-if="currentSurveyQuestion.type==='likert'" class="likert-scale">
+                <div
+                  v-for="(label, index) in currentSurveyQuestion.options"
+                  :key="index"
+                  class="likert-option"
+                  :class="{ selected: rightAnswer === index + 1 }"
+                  @click="selectExplanationAnswer('right', index + 1)"
+                  :style="{ pointerEvents: rightAnswer ? 'none' : 'auto' }"
+                >
+                  <div>{{ index + 1 }}</div>
+                  <div class="likert-label">{{ label }}</div>
+                </div>
+              </div>
+
+              <div v-else-if="currentSurveyQuestion.type==='multiple'" class="options">
+                <div
+                  v-for="option in currentSurveyQuestion.options"
+                  :key="option"
+                  class="option"
+                  :class="{ selected: rightAnswer === option }"
+                  @click="selectExplanationAnswer('right', option)"
+                >
+                  {{ option }}
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-
-        <!-- Multiple Choice Questions -->
-        <div v-else-if="currentSurveyQuestion.type==='multiple'" class="options">
-          <div
-            v-for="option in currentSurveyQuestion.options"
-            :key="option"
-            class="option"
-            :class="{ selected: currentSampleAnswers[currentSurveyQuestion.id] === option }"
-            @click="answerSurvey(option)"
-          >
-            {{ option }}
-          </div>
+        <!-- ...existing code for progress info... -->
+        <div class="progress-info">
+          <p>Sample {{ currentSampleIndex + 1 }} of {{ randomDataset?.samples.length || 0 }}</p>
+          <p>Overall Progress: {{ totalProgress }}</p>
         </div>
-
-        <!-- Open-ended Questions -->
-        <div v-else-if="currentSurveyQuestion.type==='textarea'">
-          <textarea v-model="currentSampleAnswers[currentSurveyQuestion.id]" placeholder="Enter your answer here..." style="width: 100%; min-height: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+        <div class="buttons">
+          <!-- <button @click="prevSurveyQuestion" :disabled="currentSurveyIndex === 0 && currentSampleIndex === 0">Previous</button> -->
+          <button 
+            v-if="!isLastSample || !isLastSurveyQuestion" 
+            @click="nextSurveyQuestion"
+            :disabled="!leftAnswer || !rightAnswer"
+            style="margin-left: auto;"
+          >Next</button>
+          <button 
+            v-else 
+            @click="submitSurvey"
+            :disabled="!leftAnswer || !rightAnswer"
+            style="margin-left: auto;"
+          >Next</button>
+        </div>
+        <div class="current-question">
+          Question {{ currentSurveyIndex + 1 }} of {{ surveyQuestions.length }}
+        </div>
+      </div>
+    </div>
+    <!-- New Review Phase Section -->
+    <div v-else-if="reviewPhase && !finalSubmitted" class="section">
+      <h2>Review Phase - {{ currentReviewMethod }} Explanation</h2>
+      
+      <!-- Explanations for all samples for current method -->
+      <div class="explanations-group">
+        <div v-for="(sample, index) in randomDataset.samples" :key="index">
+          <p>
+            <strong>Sample {{ index + 1 }} - {{ currentReviewMethod }} Explanation:</strong>
+            {{ sample.explanations[currentReviewMethod].text }}
+          </p>
         </div>
       </div>
 
-      <div class="progress-info">
-        <p>Sample {{ currentSampleIndex + 1 }} of {{ randomDataset?.samples.length || 0 }}</p>
-        <p>Overall Progress: {{ totalProgress }}</p>
-      </div>
+      <!-- Review Questions for current method -->
+      <div class="method-questions">
+        <div v-for="question in reviewQuestions" :key="question.id" style="margin-bottom: 20px;">
+          <p><strong>{{ question.text }}</strong></p>
+          <div v-if="question.type==='textarea'">
 
+            <textarea
+              style="width: 100%; height: 80px;"
+              @input="answerReview(currentReviewMethod, question.id, $event.target.value)"
+              :value="reviewAnswers[currentReviewMethod]?.[question.id] || ''"
+              placeholder="Your answer..."
+            ></textarea>
+
+          </div>
+        </div>
+      </div>
+      
+      <!-- Navigation buttons -->
       <div class="buttons">
-        <button @click="prevSurveyQuestion" :disabled="currentSurveyIndex === 0 && currentSampleIndex === 0">Previous</button>
-        <button 
-          v-if="!(isLastSurveyQuestion && isLastSample)" 
-          @click="nextSurveyQuestion" 
-          :disabled="currentSampleAnswers[currentSurveyQuestion.id] === undefined || currentSampleAnswers[currentSurveyQuestion.id] === ''" 
-          style="margin-left: auto;"
-        >Next</button>
-        <button 
-          v-else 
-          @click="submitSurvey" 
-          :disabled="currentSampleAnswers[currentSurveyQuestion.id] === undefined || currentSampleAnswers[currentSurveyQuestion.id] === ''" 
-          style="margin-left: auto;"
-        >Submit Survey</button>
-      </div>
-      <div class="current-question">
-        Question {{ currentSurveyIndex + 1 }} of {{ surveyQuestions.length }}
+        <button v-if="currentReviewMethod===leftMethod" @click="nextReviewMethod">Next</button>
+        <button v-else @click="finalSubmitReview">Final Submit</button>
       </div>
     </div>
 
-    <!-- Completion Screen -->
-    <div v-else class="section">
+    <!-- Final Completion Section -->
+    <div v-else-if="finalSubmitted" class="section">
       <h2>Thank you for completing the survey!</h2>
       <div class="status" v-for="(msg, i) in submissionStatus" :key="i">
         {{ msg }}
       </div>
     </div>
+
+    <!-- Completion Screen -->
+    <!-- <div v-else class="section">
+      <h2>Thank you for completing the survey!</h2>
+      <div class="status" v-for="(msg, i) in submissionStatus" :key="i">
+        {{ msg }}
+      </div>
+    </div> -->
   </div>
 
   <script>
@@ -353,19 +601,44 @@
           surveyCompleted: false,
           surveyQuestions: [],
           currentSurveyIndex: 0,
-          answers: {},
           submissionStatus: [],
           
           // Dataset properties
           datasets: [],
           currentCase: null,
-          // Explanation method selected only once (e.g., "Xemble" or "SHAP")
-          currentMethod: "",
+          // No longer using currentMethod only; now use separate methods for each explanation
+          leftMethod: "",
+          rightMethod: "",
           currentSampleIndex: 0,
           randomDataset: null,
-          currentSampleAnswers: {},     // Answers for current sample
-          allSamplesAnswers: [],        // Array to store all samples' answers
-          
+          currentSampleAnswers: {},  // Answers for current sample
+          allSamplesAnswers: [],     // Array to store all samples' answers
+          leftAnswer: null,
+          rightAnswer: null,
+          leftStartTime: null,
+          rightStartTime: null,
+          leftToggled: false,
+          rightToggled: false,
+          // New review phase related data
+          reviewPhase: false,
+          finalSubmitted: false,
+          reviewAnswers: {},
+          currentReviewMethod: "",
+          reviewQuestions: [],
+          // New data for transition pages
+          transitionTemplates: {
+            1: "transition-1"
+          },
+          pendingSurveyIndex: null,
+          showTransitionPage: false,
+          currentTransitionHtml: "",
+          // New flag for showing the info screen after training
+          showInfoScreen: false,
+          // New fields for URL parameters and check flag
+          prolific_pid: "",
+          session_id: "",
+          study_id: "",
+          urlParamsValid: false
         }
       },
       computed: {
@@ -386,6 +659,13 @@
         }
       },
       methods: {
+        toggleVotesTable(side) {
+          if (side === 'left') {
+            this.leftToggled = !this.leftToggled;
+          } else if (side === 'right') {
+            this.rightToggled = !this.rightToggled;
+          }
+        },
         giveConsent() {
           this.consentGiven = true;
         },
@@ -394,78 +674,218 @@
         },
         completeTraining() {
           this.trainingCompleted = true;
-          // Start the survey questions after training is complete.
+          // Show info screen rather than immediately starting the survey
+          this.showInfoScreen = true;
+        },
+        proceedToSurvey() {
+          this.showInfoScreen = false;
           this.surveyStarted = true;
         },
+        // New method for explanation evaluation answers
+        selectExplanationAnswer(side, answer) {
+          const currentTime = Date.now();      
+          if (side === 'left' && this.leftAnswer === null) {
+            this.leftAnswer = answer;
+            const leftDuration = (currentTime - this.leftStartTime) / 1000;
+            if (!this.currentSampleAnswers[this.currentSurveyQuestion.id]) {
+              this.currentSampleAnswers[this.currentSurveyQuestion.id] = {};
+            }
+            this.currentSampleAnswers[this.currentSurveyQuestion.id].left = answer;
+            this.currentSampleAnswers[this.currentSurveyQuestion.id].leftTimeSec = leftDuration;
+            this.currentSampleAnswers[this.currentSurveyQuestion.id].leftOpened = this.leftToggled;
+            this.currentSampleAnswers[this.currentSurveyQuestion.id].rightOpened = this.rightToggled;
+            // Start timer for the right explanation once left answer is recorded
+            this.rightStartTime = Date.now();
+          } else if (side === 'right' && this.rightAnswer === null) {
+            this.rightAnswer = answer;
+            const rightDuration = (currentTime - this.rightStartTime) / 1000;
+            if (!this.currentSampleAnswers[this.currentSurveyQuestion.id]) {
+              this.currentSampleAnswers[this.currentSurveyQuestion.id] = {};
+            }
+            this.currentSampleAnswers[this.currentSurveyQuestion.id].right = answer;
+            this.currentSampleAnswers[this.currentSurveyQuestion.id].rightTimeSec = rightDuration;
+          }
+        },
         nextSurveyQuestion() {
+
+          this.allSamplesAnswers[this.currentSampleIndex] = {
+            sampleId: this.currentCase.id,
+            leftMethod: this.leftMethod,
+            rightMethod: this.rightMethod,
+            answers: { ...this.currentSampleAnswers }
+          };
+
+          console.log("All samples answers:", this.allSamplesAnswers);
+
+          // Reset explanation answers and randomize new methods for next question
+          this.leftAnswer = null;
+          this.rightAnswer = null;
+          // Reset the votes table toggles so they get closed on new question
+          this.leftToggled = false;
+          this.rightToggled = false;
+          // Start the timer for left explanation
+          this.leftStartTime = Date.now();
+          this.rightStartTime = null;
+          
+          // this.leftMethod = Math.random() < 0.5 ? 'Xemble' : 'SHAP';
+          // this.rightMethod = Math.random() < 0.5 ? 'Xemble' : 'SHAP';
+
           if (this.currentSurveyIndex < this.surveyQuestions.length - 1) {
-            this.currentSurveyIndex++;
+            const nextIndex = this.currentSurveyIndex + 1;
+            // If a transition template is defined for the upcoming question...
+            if (this.transitionTemplates[nextIndex]) {
+              this.pendingSurveyIndex = nextIndex;
+              const templateElem = document.getElementById(this.transitionTemplates[nextIndex]);
+              if (templateElem) {
+                this.currentTransitionHtml = templateElem.innerHTML;
+              }
+              this.showTransitionPage = true;
+            } else {
+              this.currentSurveyIndex++;
+            }
           } else if (!this.isLastSample) {
-            // Save current sample answers
-            this.allSamplesAnswers[this.currentSampleIndex] = {
-              sampleId: this.currentCase.id,
-              answers: { ...this.currentSampleAnswers }
-            };
-            // Move to next sample
             this.currentSampleIndex++;
             this.currentSurveyIndex = 0;
             this.currentCase = this.randomDataset.samples[this.currentSampleIndex];
-            // Clear answers for new sample
-            this.currentSampleAnswers = {};
           }
+        },
+        continueSurvey() {
+          // Called when the user clicks "Continue" on the transition page.
+          if (this.pendingSurveyIndex !== null) {
+            this.currentSurveyIndex = this.pendingSurveyIndex;
+            this.pendingSurveyIndex = null;
+          }
+          this.showTransitionPage = false;
         },
         prevSurveyQuestion() {
           if (this.currentSurveyIndex > 0) {
             this.currentSurveyIndex--;
           } else if (this.currentSampleIndex > 0) {
-            // Save current sample answers
             this.allSamplesAnswers[this.currentSampleIndex] = {
               sampleId: this.currentCase.id,
-              answers: { ...this.currentSampleAnswers }
+              answers: { [this.currentSurveyQuestion.id]: { left: this.leftAnswer, right: this.rightAnswer } }
             };
-            // Move to previous sample
             this.currentSampleIndex--;
             this.currentSurveyIndex = this.surveyQuestions.length - 1;
             this.currentCase = this.randomDataset.samples[this.currentSampleIndex];
-            // Restore previous sample's answers
-            this.currentSampleAnswers = this.allSamplesAnswers[this.currentSampleIndex]?.answers || {};
+            this.leftAnswer = this.allSamplesAnswers[this.currentSampleIndex]?.answers?.[this.currentSurveyQuestion.id]?.left || null;
+            this.rightAnswer = this.allSamplesAnswers[this.currentSampleIndex]?.answers?.[this.currentSurveyQuestion.id]?.right || null;
           }
         },
-        answerSurvey(answer) {
-          this.currentSampleAnswers[this.currentSurveyQuestion.id] = answer;
-        },
         submitSurvey() {
+
+          this.currentSampleAnswers[this.currentSurveyQuestion.id] = { left: this.leftAnswer, right: this.rightAnswer };
           // Save answers for the last sample
           this.allSamplesAnswers[this.currentSampleIndex] = {
             sampleId: this.currentCase.id,
-            answers: { ...this.currentSampleAnswers }
+            answers: { ...this.currentSampleAnswers },
+            // Send URL parameters as metadata
+            meta: {
+              PROLIFIC_PID: this.prolific_pid,
+              SESSION_ID: this.session_id,
+              STUDY_ID: this.study_id
+            }
           };
+
           console.log("All samples answers:", this.allSamplesAnswers);
-          this.submissionStatus.push("Survey submitted successfully.");
+          // Instead of finalizing survey, enter review phase.
+          this.reviewPhase = true;
           this.surveyCompleted = true;
+          this.submissionStatus.push("Survey submitted successfully.");
         },
-        // Fetch dataset and select one random dataset sample
+        answerReview(method, questionId, answer) {
+          // Initialize the method object if it doesn't exist
+          if (!this.reviewAnswers[method]) {
+            this.reviewAnswers[method] = {};
+          }
+          
+          // Store the answer at the right location
+          this.reviewAnswers[method][questionId] = answer;
+        },
+        // New method to finalize review phase
+        finalSubmitReview() {
+          console.log("All samples answers:", this.allSamplesAnswers);
+          console.log("Review answers:", this.reviewAnswers);
+          
+          const payload = {
+            samples: this.allSamplesAnswers,
+            submissionStatus: this.submissionStatus,
+            reviewAnswers: this.reviewAnswers
+          };
+          fetch('https://example.com/api/submit', {  // replace with actual endpoint
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(result => {
+            this.submissionStatus.push("Review phase completed successfully.");
+            this.finalSubmitted = true;
+          })
+          .catch(error => {
+            console.error("Failed to submit survey responses", error);
+            this.submissionStatus.push("Error submitting survey responses.");
+            this.finalSubmitted = true;
+          });
+        },
+        // New method to move to the next review method.
+        nextReviewMethod() {
+          if(this.currentReviewMethod === this.leftMethod) {
+            this.currentReviewMethod = this.rightMethod;
+          }
+        },
+        // Fetch dataset and setup explanation methods
         fetchDatasets() {
-          fetch('https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json?v=3.0')
+          fetch('https://raw.githubusercontent.com/ronbenshimol/xemble-prolific/refs/heads/main/data.json?v=5.0')
             .then(response => response.json())
             .then(data => {
               this.surveyQuestions = data.questions;
-              this.datasets = data.datasets;
+                this.datasets = data.datasets;
               if (this.datasets.length) {
                 this.randomDataset = this.datasets[Math.floor(Math.random() * this.datasets.length)];
                 if (this.randomDataset.samples && this.randomDataset.samples.length) {
+
+                  // TODO: temp. Limit samples to 2 for testing
+                  this.randomDataset.samples = this.randomDataset.samples.slice(0, 2);
+
                   this.currentCase = this.randomDataset.samples[0];
                   this.currentCase.dataset = this.randomDataset.name;
+
+                  // Start timer for left explanation for the first question
+                  this.leftStartTime = Date.now();
                 }
-                this.currentMethod = Math.random() < 0.5 ? 'Xemble' : 'SHAP';
+                // Randomly assign explanation methods for left and right
+                this.leftMethod = Math.random() < 0.5 ? 'Xemble' : 'SHAP';
+                this.rightMethod = this.leftMethod === 'Xemble' ? 'SHAP' : 'Xemble';
+                // init review method
+                this.currentReviewMethod = this.leftMethod;
+
+                this.reviewQuestions = data.reviewQuestions;
               }
             })
             .catch(error => console.error("Failed to load data.json:", error));
         }
       },
       created() {
+        // Check required URL parameters: PROLIFIC_PID, SESSION_ID, STUDY_ID
+        const params = new URLSearchParams(window.location.search);
+        if (params.has("PROLIFIC_PID") && params.has("SESSION_ID") && params.has("STUDY_ID") &&
+            params.get("PROLIFIC_PID").trim() !== "" && params.get("SESSION_ID").trim() !== "" && params.get("STUDY_ID").trim() !== "") {
+          this.prolific_pid = params.get("PROLIFIC_PID");
+          this.session_id = params.get("SESSION_ID");
+          this.study_id = params.get("STUDY_ID");
+          this.urlParamsValid = true;
+        } else {
+          this.urlParamsValid = false;
+        }
         this.fetchDatasets();
-        
       }
     }).mount('#app');
   </script>
